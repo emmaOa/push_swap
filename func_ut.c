@@ -2,18 +2,6 @@
 #include "libft.h"
 #include "push_swap.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	char	*k;
@@ -118,11 +106,20 @@ void ft_ra(int *arra)
 		write(1, "ra\n", 3);
 }
 
-void ft_pb(int *arra, int *arrb)
+void ft_pb(int *arra, int *arrb, int len_arra)
 {
-	int *tmp
+	int *tmp;
+	int i;
 
-	tmp = malloc((ft_strlen(arra) - 1) * sizeof(int));
+	i = 0;
+	tmp = malloc((len_arra - 1)* sizeof(int));
 	arrb[0] = arra[0];
-	ft_memmove(tmp, arra, )
+	while (len_arra > 0)
+	{
+		tmp[i] = arra[i + 1];
+		i++;
+		len_arra--;
+	}
+	free(arra);
+	arra = tmp;
 }

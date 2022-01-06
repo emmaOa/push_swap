@@ -26,7 +26,7 @@ char *sort_a1(int *arra)
 	return ("error");
 }
 
-// char *sort_a2(int *arra, int *arrb)
+// char *sort_a2(int *arra, int *arrb, int len_arra)
 // {
 
 // }
@@ -36,8 +36,10 @@ int main(int arc, char **arv)
 	int i;
 	int *arra;
 	int *arrb;
+	int len_arra;
 
 	i = 0;
+	len_arra = arc -1;
 	arra = (int *)malloc((arc - 1) * sizeof(int));
 	arrb = (int *)malloc((arc - 1) * sizeof(int));
 
@@ -52,9 +54,10 @@ int main(int arc, char **arv)
 	for(i = 0; i < 3; i++)
 		printf("%d\n", arra[i]);
 	printf("----------\n");
-	ft_pb(arra, arrb);
+	ft_pb(arra, arrb, len_arra);
 	for(i = 0; i < 3; i++)
 		printf("%d\n", arra[i]);
 	printf("----------\n");
-	printf("%d\n", arrb[0]);
+	for(i = 0; i < 3; i++)
+		printf("%d\n", arra[i]);
 }
