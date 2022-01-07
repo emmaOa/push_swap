@@ -86,40 +86,37 @@ void ft_swap(int *a, int *b)
 	*b = tmp;
 }
 
-void ft_sa(int *arra)
+void ft_sa(t_stack *arra)
 {	
-	ft_swap(&arra[1], &arra[0]);
+	ft_swap(&arra->stack[1], &arra->stack[0]);
 	write(1, "sa\n", 3);
 }
 
-void ft_rra(int *arra)
+void ft_rra(t_stack *arra)
 {
-		ft_swap(&arra[2], &arra[1]);
-		ft_swap(&arra[1], &arra[0]);
+		ft_swap(&arra->stack[2], &arra->stack[1]);
+		ft_swap(&arra->stack[1], &arra->stack[0]);
 		write(1, "rra\n", 4);
 }
 
-void ft_ra(int *arra)
+void ft_ra(t_stack *arra)
 {
-		ft_swap(&arra[0], &arra[1]);
-		ft_swap(&arra[1], &arra[2]);
+		ft_swap(&arra->stack[0], &arra->stack[1]);
+		ft_swap(&arra->stack[1], &arra->stack[2]);
 		write(1, "ra\n", 3);
 }
 
-void ft_pb(int *arra, int *arrb, int len_arra)
+void ft_pb(t_stack *arra, t_stack *arrb)
 {
-	int *tmp;
 	int i;
 
 	i = 0;
-	tmp = malloc((len_arra - 1)* sizeof(int));
-	arrb[0] = arra[0];
-	while (len_arra > 0)
+	arrb->stack[0] = arra->stack[0];
+	while (i < arra->len)
 	{
-		tmp[i] = arra[i + 1];
+		arra->stack[i] = arra->stack[i + 1];
 		i++;
-		len_arra--;
 	}
-	free(arra);
-	arra = tmp;
+	arra->len--;
+	arrb->len++;
 }

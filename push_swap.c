@@ -3,61 +3,59 @@
 #include "libft.h"
 #include "push_swap.h"
 
-char *sort_a1(int *arra)
+char *sort_a1(t_stack *arra)
 {
-	if (arra[0] > arra[1] && arra[0] < arra[2])
+	if (arra->stack[0] > arra->stack[1] && arra->stack[0] < arra->stack[2])
 		ft_sa(arra);
-	else if (arra[0] > arra[1] && arra[0] > arra[2] && arra[1] > arra[2])
+	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
 	{
 		ft_sa(arra);
 		ft_rra(arra);
 	}
-	else if (arra[0] > arra[1] && arra[0] > arra[2] && arra[1] < arra[2])
+	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] < arra->stack[2])
 	{
 		ft_ra(arra);
 	}
-	else if(arra[0] < arra[1] && arra[0] < arra[2] && arra[1] > arra[2])
+	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] < arra->stack[2] && arra->stack[1] > arra->stack[2])
 	{
 		ft_sa(arra);
 		ft_ra(arra);
 	}
-	else if(arra[0] < arra[1] && arra[0] > arra[2] && arra[1] > arra[2])
+	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
 		ft_rra(arra);
 	return ("error");
 }
 
-// char *sort_a2(int *arra, int *arrb, int len_arra)
+// char *sort_a2(t_stack *arra, t_stack *arrb)
 // {
 
 // }
 
 int main(int arc, char **arv)
 {
-	int i;
-	int *arra;
-	int *arrb;
-	int len_arra;
+	int		i;
+	t_stack	arra;
+	t_stack	arrb;
 
 	i = 0;
-	len_arra = arc -1;
-	arra = (int *)malloc((arc - 1) * sizeof(int));
-	arrb = (int *)malloc((arc - 1) * sizeof(int));
+	arra.len = arc - 1;
+	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
+	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
 
 	while (i < arc - 1)
 	{
-		arra[i] = ft_atoi(arv[i+1]);
-		printf("%d\n", arra[i]);
+		arra.stack[i] = ft_atoi (arv[i + 1]);
+		printf("%d\n", arra.stack[i]);
 		i++;
 	}
-	printf("----------\n");
-	sort_a1(arra);
+	printf("----------\n"); 
+	sort_a1(&arra);
 	for(i = 0; i < 3; i++)
-		printf("%d\n", arra[i]);
+		printf("%d\n", arra.stack[i]);
 	printf("----------\n");
-	ft_pb(arra, arrb, len_arra);
-	for(i = 0; i < 3; i++)
-		printf("%d\n", arra[i]);
+	ft_pb(&arra, &arrb);
+		printf("%d\n", arrb.stack[0]);
 	printf("----------\n");
-	for(i = 0; i < 3; i++)
-		printf("%d\n", arra[i]);
+	for(i = 0; i < arra.len; i++)
+		printf("%d\n", arra.stack[i]);
 }
