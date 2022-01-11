@@ -21,4 +21,5 @@ void ft_sb(t_stack *arrb);
 void ft_rb(t_stack *arrb);
 void ft_rrb(t_stack *arrb);
 void call(char *s, void (*f)(t_stack *arr), t_stack *t);
+t_stack	ft_sort(t_stack *arr);
 #endif

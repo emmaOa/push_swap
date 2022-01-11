@@ -129,6 +129,12 @@ void ft_pa(t_stack *arra, t_stack *arrb)
 		tmp--;
 	}
 	arra->stack[0] = arrb->stack[0];
+	i = 0;
+	while (i < arrb->len)
+	{
+		arrb->stack[i] = arrb->stack[i + 1];
+		i++;
+	}
 	arrb->len--;
 	write(1, "pa\n", 3);
 }
@@ -138,7 +144,7 @@ void ft_pb(t_stack *arra, t_stack *arrb)
 	int i;
 
 	i = 0;
-	arrb->stack[0] = arra->stack[0];
+	arrb->stack[arrb->len] = arra->stack[0];
 	while (i < arra->len)
 	{
 		arra->stack[i] = arra->stack[i + 1];
@@ -151,14 +157,32 @@ void ft_pb(t_stack *arra, t_stack *arrb)
 
 void ft_ra(t_stack *arra)
 {
-	ft_swap(&arra->stack[0], &arra->stack[1]);
-	ft_swap(&arra->stack[1], &arra->stack[2]);
+	int	i;
+	int	tmp;
+
+	i = 0;
+	tmp = arra->stack[i];
+	while (i < arra->len)
+	{
+		arra->stack[i] = arra->stack[i + 1];
+		i++;
+	}
+	arra->stack[arra->len - 1] = tmp;
 }
 
 void ft_rb(t_stack *arrb)
 {
-	ft_swap(&arrb->stack[0], &arrb->stack[1]);
-	ft_swap(&arrb->stack[1], &arrb->stack[2]);
+	int	i;
+	int	tmp;
+
+	i = 0;
+	tmp = arrb->stack[i];
+	while (i < arrb->len)
+	{
+		arrb->stack[i] = arrb->stack[i + 1];
+		i++;
+	}
+	arrb->stack[arrb->len - 1] = tmp;
 }
 
 void ft_rr(t_stack *arrb, t_stack *arra)
@@ -170,14 +194,32 @@ void ft_rr(t_stack *arrb, t_stack *arra)
 
 void ft_rra(t_stack *arra)
 {
-		ft_swap(&arra->stack[2], &arra->stack[1]);
-		ft_swap(&arra->stack[1], &arra->stack[0]);
+	int	i;
+	int	tmp;
+
+	i = arra->len - 1;
+	tmp = arra->stack[i];
+	while (i >= 0)
+	{
+		arra->stack[i] = arra->stack[i - 1];
+		i--;
+	}
+	arra->stack[0] = tmp;
 }
 
 void ft_rrb(t_stack *arrb)
 {
-		ft_swap(&arrb->stack[2], &arrb->stack[1]);
-		ft_swap(&arrb->stack[1], &arrb->stack[0]);
+			int	i;
+	int	tmp;
+
+	i = arrb->len - 1;
+	tmp = arrb->stack[i];
+	while (i >= 0)
+	{
+		arrb->stack[i] = arrb->stack[i - 1];
+		i--;
+	}
+	arrb->stack[0] = tmp;
 }
 
 void ft_rrr(t_stack *arrb, t_stack *arra)
@@ -191,4 +233,36 @@ void call(char *s, void (*f)(t_stack *arr), t_stack *t)
 {
 	f(t);
 	write(1, s, ft_strlen(s));
+}
+
+t_stack	ft_sort(t_stack *arr)
+{
+	t_stack rtrn;
+	int i;
+	int j;
+	int k;
+
+	rtrn.len = arr->len;
+	rtrn.stack = malloc(arr->len * sizeof(int));
+	i = 0;
+	k = 0;
+
+	while (i < arr->len)
+	{
+		rtrn.stack[i] = arr->stack[i];
+		i++;
+	}
+	i = 0;
+	while (i < rtrn.len)
+	{
+		j = i + 1;
+		while(j < rtrn.len)
+		{
+			if(rtrn.stack[i] > rtrn.stack[j])
+				ft_swap(&rtrn.stack[i], &rtrn.stack[j]);
+			j++;
+		}
+		i++;
+	}
+	return (rtrn);
 }
