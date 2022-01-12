@@ -14,45 +14,6 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	char	*k;
-	size_t	i;
-
-	k = (char *)dst;
-	i = 0;
-	if (!k && !src)
-		return (NULL);
-	while (i < n)
-	{
-		k[i] = *(char *)src;
-		i++;
-		src++;
-	}
-	return (dst);
-}
-
-void	*ft_memmove(void *dst, const void *src, size_t len)
-{
-	char	*d;
-	char	*s;
-
-	d = (char *)dst;
-	s = (char *)src;
-	if (!dst && !src)
-		return (NULL);
-	if (dst > src)
-	{
-		while (len-- > 0)
-		{
-			d[len] = s[len];
-		}
-	}
-	else
-		ft_memcpy(d, s, len);
-	return (dst);
-}
-
 static	int	check(size_t sign)
 {
 	if (sign == 1)
@@ -142,16 +103,24 @@ void ft_pa(t_stack *arra, t_stack *arrb)
 void ft_pb(t_stack *arra, t_stack *arrb)
 {
 	int i;
+	int tmp;
 
 	i = 0;
-	arrb->stack[arrb->len] = arra->stack[0];
+	arrb->len++;
+	tmp = arrb->len;
+	while (tmp > 0)
+	{
+		arrb->stack[tmp] = arrb->stack[tmp - 1];
+		tmp--;
+	}
+	arrb->stack[0] = arra->stack[0];
+	i = 0;
 	while (i < arra->len)
 	{
 		arra->stack[i] = arra->stack[i + 1];
 		i++;
 	}
 	arra->len--;
-	arrb->len++;
 	write(1, "pb\n", 3);
 }
 
@@ -266,3 +235,40 @@ t_stack	ft_sort(t_stack *arr)
 	}
 	return (rtrn);
 }
+
+/*t_stack ft_eliminat(t_stack *arr)
+{
+	int i;
+
+	i = 0;
+		while (i < arr->len)
+	{
+		arr->stack[i] = arr->stack[i + 1];
+		i++;
+	}
+	arr->len--;
+	return (*arr);
+}
+*/
+/*t_stack ft_sortpart(t_stack *arr, t_stack *start, t_stack *end)
+{
+	t_stack part;
+	int startnb;
+	int i;
+
+	i = 0;
+	part.len =  end->stack[0] - start->stack[0] + 1;
+	part.stack = malloc((end->stack[0] - start->stack[0] + 1) * sizeof(int));
+	startnb = start->stack[0];
+	while (startnb < end->stack[0])
+	{
+		part.stack[i] = arr->stack[startnb];
+		i++;
+		startnb++;
+	}
+	part = ft_sort(&part);
+	ft_eliminat(start);
+	ft_eliminat(end);
+	return (part);
+}
+*/
