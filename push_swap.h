@@ -20,9 +20,11 @@ void ft_rb(t_stack *arrb);
 void ft_rrb(t_stack *arrb);
 void call(char *s, void (*f)(t_stack *arr), t_stack *t);
 t_stack	ft_sort(t_stack *arr);
-char *sort_a3(t_stack *arra, t_stack *arrb);
-char *sort_a2(t_stack *arra, t_stack *arrb);
+void sort_a3(t_stack *arra, t_stack *arrb);
+void sort_a2(t_stack *arra, t_stack *arrb);
 char *sort_a1(t_stack *arra);
 t_stack ft_sortpart(t_stack *arr, t_stack *start, t_stack *end);
 t_stack ft_eliminat(t_stack *arr);
+void	ft_empty_1(t_stack *arra, t_stack *arrb);
+void	ft_empty_2(t_stack *arra, t_stack *arrb);
 #endif
