@@ -23,8 +23,7 @@ t_stack	ft_sort(t_stack *arr);
 void sort_a3(t_stack *arra, t_stack *arrb);
 void sort_a2(t_stack *arra, t_stack *arrb);
 char *sort_a1(t_stack *arra);
-t_stack ft_sortpart(t_stack *arr, t_stack *start, t_stack *end);
-t_stack ft_eliminat(t_stack *arr);
-void	ft_empty_1(t_stack *arra, t_stack *arrb);
+t_stack ft_sortpart(t_stack *arr, t_stack *start);
+t_stack	ft_empty_1(t_stack *arra, t_stack *arrb);
 void	ft_empty_2(t_stack *arra, t_stack *arrb);
 #endif
