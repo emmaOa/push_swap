@@ -83,10 +83,10 @@ void	sort_a2(t_stack *arra, t_stack *arrb)
 
 void	sort_a3(t_stack *arra, t_stack *arrb)
 {
-	//ft_empty_1(arra, arrb);
-	ft_empty_2(arrb, arra);
+	ft_empty_1(arra, arrb);
+	/*ft_empty_2(arrb, arra);
 	ft_pa(arra, arrb);
-	ft_pa(arra, arrb);
+	ft_pa(arra, arrb);*/
 }
 
 int main(int arc, char **arv)

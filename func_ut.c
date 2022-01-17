@@ -240,18 +240,23 @@ t_stack ft_sortpart(t_stack *arr, t_stack *start)
 	int i;
 	int va_lenstart;
 	t_stack part;
+	int x;
 
 	i = 0;
 	va_lenstart = start->stack[start->len];
+	printf("len start %d\n", start->stack[start->len]);
 	part.len =  va_lenstart - start->stack[start->len - 1];
+	printf(" len part avant %d\n", part.len);
 	part.stack = malloc((va_lenstart - start->stack[start->len - 1]) * sizeof(int));
 	while (i < va_lenstart - start->stack[start->len - 1])
 	{
-		part.stack[i] = arr->stack[va_lenstart];
+		part.stack[i] = arr->stack[i];
 		i++;
-		va_lenstart--;
 	}
+	part = ft_sort(&part);
 	start->len--;
+	for(x = 0; x < part.len; x++)
+		printf("V %d\n", part.stack[x]);
 	return (part);
 }
 /*t_stack cat(t_stack *arry, int len)
@@ -278,6 +283,8 @@ t_stack	ft_empty_1(t_stack *arra, t_stack *arrb)
 	t_stack arry;
 	t_stack start;
 	t_stack part;
+	t_stack v_part;
+	t_stack arra_sorti;
 
 
 	i = 0;
@@ -285,38 +292,45 @@ t_stack	ft_empty_1(t_stack *arra, t_stack *arrb)
 	
 	len_arra = arra->len;
 	x = 0;
+	indB = 0;
 /*	while (len_arra / 2 > 0)
 	{
 		len_arra = len_arra / 2;
 		x++;
 	}*/
+	/*arra_sorti.len = arra->len;
+	arra_sorti.stack = malloc(arra->len * sizeof(int));
+	arra_sorti = ft_sort(arra);*/
 	arry.len = arra->len;
 	arry.stack = malloc(arra->len * sizeof(int));
 	arry = ft_sort(arra);
-	start.len = arra->len;
-	printf("x %d\n", x);
+	start.len = arra->len - 2;
+	v_part.len = arra->len - 2;
 	start.stack = (int *)malloc(x * sizeof(int));
+	v_part.stack = (int *)malloc(x * sizeof(int));
 	while (i < arra->len - 1)
 	{
-		printf("I1 %d\n", i);
+		
 		if(arra->stack[0] < arry.stack[arry.len / 2])
 		{
 			ft_pb(arra,arrb);
 			i++;
+			indB++;
 		}
-
-		if (arra->stack[0] == arry.stack[(arry.len / 2)])
+		printf(" valeur indb %d\n", indB);
+		v_part.stack[x] = (indB - v_part.stack[x - 1]);
+		x++;
+		printf(" valeur x %d\n", x);
+		if (arra->stack[0] == arry.stack[arry.len / 2])
 		{
+			printf("valeur arry %d\n", arry.stack[arry.len / 2]);
 			indB = arrb->len;
 			if (start.stack[y] != indB)
 			{
 				y++;
 				start.stack[y] = indB;
 			}
-			/*for(l= 0; l < start.len; l++)
-				printf("foix %d\n", start.stack[l]);*/
-
-			printf(" ..%d\n", indB);
+			printf("indb %d\n", indB);
 		}
 		if (!(arra->stack[0] < arry.stack[arry.len / 2]))
 		{
@@ -325,20 +339,22 @@ t_stack	ft_empty_1(t_stack *arra, t_stack *arrb)
 		}
 		if (i = (arra->len / 2))
 			arry = ft_sort(arra);
+		i = 0;
 	}
-
-	while (start.stack[start.len] != len_arra - 2)
+	//printf("len start avant %d\n", start.len);
+/*	while (start.stack[start.len] != len_arra - 2)
 	{
 		start.len--;
 	}
-	start.len += 1;
 	for(x= 0; x < start.len; x++)
-		printf("%d\n", start.stack[x]);
+		printf("%d\n", start.stack[x]);*/
 /*	for(x= 0; x < start.len; x++)
 		printf("%d\n", start.stack[x]);*/
 
 	if (arra->stack[0] > arra->stack[1])
 		call("sa\n", ft_sa, arra);
+/*	for(y= 0; y < start.len; y++)
+		printf("v_ part %d\n", start.stack[y]);*/
 	return (start);
 }
 
@@ -346,12 +362,14 @@ void	ft_empty_2(t_stack *arrb, t_stack *arra)
 {
 	int i;
 	int x;
+	int k;
 	t_stack arry;
 	t_stack start;
 	t_stack part;
 	int Half;
 
-	i = arrb->len;
+	i = 0;
+	k = 0;
 	arry.len = arrb->len;
 	arry.stack = malloc(arrb->len * sizeof(int));
 	arry = ft_sort(arrb);
@@ -359,37 +377,27 @@ void	ft_empty_2(t_stack *arrb, t_stack *arra)
 	start = ft_empty_1(arra, arrb);
 	
 	part = ft_sortpart(arrb, &start);
-	Half = (start.stack[start.len] - start.stack[start.len - 1]) / 2;
-	while (i < start.stack[start.len])
+	printf("len part %d\n", part.len);
+	Half = (start.stack[1] - start.stack[0]) / 2;
+
+	while (i < arrb->len - 1)
 	{
-		if (Half == 0)
-		{
-			if (arrb->stack[0] < arrb->stack[1])
-				call("sb\n", ft_sb, arrb);
-			ft_pa(arra,arrb);
-			i++;
-			ft_pa(arra,arrb);
-			i++;	
-			if (i == start.stack[start.len])
-				start.len--;
-		}
-		if(arrb->stack[0] > arrb->stack[Half])
+		if(arrb->stack[0] > arry.stack[arry.len / 2])
 		{
 			ft_pa(arra,arrb);
 			i++;
-			if (i == start.stack[start.len])
-				start.len--;
 		}
-		if (!(arrb->stack[0] > arrb->stack[Half]))
+		if (!(arrb->stack[0] > arry.stack[arry.len / 2]))
 		{
 			call("rb\n", ft_rb, arrb);
 			i++;
-			if (i == start.stack[start.len])
-				start.len--;
 		}
-		/*if (i = (arrb->len / 2))
-			arry = ft_sort(arrb);*/
+		if (i = (arrb->len / 2))
+		{
+			arry = ft_sort(arrb);
+		}
 	}
+
 	if (arrb->stack[0] < arrb->stack[1])
 		call("sb\n", ft_sb, arrb);
 }
