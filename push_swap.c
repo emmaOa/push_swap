@@ -83,10 +83,10 @@ void	sort_a2(t_stack *arra, t_stack *arrb)
 
 void	sort_a3(t_stack *arra, t_stack *arrb)
 {
-	ft_empty_1(arra, arrb);
-	/*ft_empty_2(arrb, arra);
-	ft_pa(arra, arrb);
-	ft_pa(arra, arrb);*/
+	//ft_empty_1(arra, arrb);
+	ft_empty_2(arrb, arra);
+	//ft_pa(arra, arrb);
+	//ft_pa(arra, arrb);
 }
 
 int main(int arc, char **arv)
@@ -119,7 +119,7 @@ int main(int arc, char **arv)
 	while (i < arc - 1)
 	{
 		arra.stack[i] = ft_atoi (arv[i + 1]);
-		printf("%d\n", arra.stack[i]);
+	//	printf("%d\n", arra.stack[i]);
 		i++;
 	}
 
