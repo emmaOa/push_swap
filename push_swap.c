@@ -85,8 +85,8 @@ void	sort_a3(t_stack *arra, t_stack *arrb)
 {
 	//ft_empty_1(arra, arrb);
 	ft_empty_2(arrb, arra);
-	//ft_pa(arra, arrb);
-	//ft_pa(arra, arrb);
+	ft_pa(arra, arrb);
+	ft_pa(arra, arrb);
 }
 
 int main(int arc, char **arv)
@@ -141,12 +141,12 @@ int main(int arc, char **arv)
 	
 	//printf("----------\n");
 	sort_a3(&arra, &arrb);
-	printf("----------\n");
+	/*printf("----------\n");
 	for(i = 0; i < arra.len; i++)
 		printf("%d\n", arra.stack[i]);
 	printf("----------\n");
 	for(i = 0; i < arrb.len; i++)
-		printf("%d\n", arrb.stack[i]);
+		printf("%d\n", arrb.stack[i]);*/
 	/*printf("----------\n"); 
 	sort_a1(&arra);
 	for(i = 0; i < 3; i++)
