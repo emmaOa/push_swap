@@ -81,37 +81,18 @@ void	sort_a2(t_stack *arra, t_stack *arrb)
 	ft_pa(arra, arrb);
 }
 
-void	sort_a3(t_stack *arra, t_stack *arrb)
-{
-	//ft_empty_1(arra, arrb);
-	ft_empty_2(arrb, arra);
-	ft_pa(arra, arrb);
-	ft_pa(arra, arrb);
-}
-
 int main(int arc, char **arv)
 {
 	int		i;
+	int count;
+	t_stack	len;
+	t_stack lis;
 	t_stack	arra;
 	t_stack	arrb;
-	/*t_stack start;
-	t_stack part;
-	t_stack end;
-	int x;
-
-	start.len = 3;
-	start.stack = (int *)malloc(3 * sizeof(int));
-	start.stack[0] = 0;
-	start.stack[1] = 3;
-	start.stack[2] = 6;
-
-	end.len = 3;
-	end.stack = (int *)malloc(3 * sizeof(int));
-	end.stack[0] = 2;
-	end.stack[1] = 5;
-	end.stack[2] = 8;
-*/
+	int max;
 	i = 0;
+	len.len = arra.len;
+	len.stack = malloc(arra.len * sizeof(int));
 	arra.len = arc - 1;
 	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
 	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
@@ -119,77 +100,24 @@ int main(int arc, char **arv)
 	while (i < arc - 1)
 	{
 		arra.stack[i] = ft_atoi (arv[i + 1]);
-	//	printf("%d\n", arra.stack[i]);
 		i++;
 	}
-
-	/*for(x = 0; x < 3; x++)
-		printf("%d\n" , end.stack[x]);*/
-
-	/*while (start.len != 0)
-	{
-		part = ft_sortpart(&arra, &start, &end);
-		for(x = 0; x < 5; x++)
-		{
-			printf("----------\n");
-			printf("%d\n", part.stack[x]);
-		//	printf("----------\n");
-		}
-			
-	}*/
+	len = ft_found_lis(&arra);
+	for(i = 0; i < arra.len; i++)
+		printf("len %d\n", len.stack[i]);
+	count = ft_count_lis(&len);
+	printf("count %d\n", count);
+	lis.len = count;
+	lis.stack = malloc(count * sizeof(int));
+	lis = ft_lis(&len, &arra);
+	for (i = 0; i < lis .len; i++)
+		printf("valeur-- %d\n", lis.stack[i]);
 	
-	
-	//printf("----------\n");
-	sort_a3(&arra, &arrb);
 	/*printf("----------\n");
 	for(i = 0; i < arra.len; i++)
 		printf("%d\n", arra.stack[i]);
 	printf("----------\n");
 	for(i = 0; i < arrb.len; i++)
-		printf("%d\n", arrb.stack[i]);*/
-	/*printf("----------\n"); 
-	sort_a1(&arra);
-	for(i = 0; i < 3; i++)
-		printf("%d\n", arra.stack[i]);
-	printf("push_b\n");
-	ft_pb(&arra, &arrb);
-		printf(" L B %d\n", arrb.len);
-		printf(" V B %d\n", arrb.stack[1]);
-		printf(" L A %d\n", arra.len);
-		printf(" V A %d\n", arra.stack[1]);
-	printf("----------\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d\n", arra.stack[i]);
-	printf("push_a\n");
-	*/
-	/*ft_pb(&arra, &arrb);
-		for(i = 0; i < arrb.len; i++)
-			printf("%d\n", arrb.stack[i]);
-	printf("----------\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d\n", arra.stack[i]);
-	ft_pb(&arra, &arrb);
-		for(i = 0; i < arrb.len; i++)
-			printf("%d\n", arrb.stack[i]);
-	printf("----------\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d\n", arra.stack[i]);
-	ft_pa(&arra, &arrb);
-		for(i = 0; i < arrb.len; i++)
-			printf("%d\n", arrb.stack[i]);
-	printf("----------\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d\n", arra.stack[i]);
-	ft_pa(&arra, &arrb);
-		for(i = 0; i < arrb.len; i++)
-			printf("%d\n", arrb.stack[i]);
-	printf("----------\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d\n", arra.stack[i]);*/
-/*t_stack arry;
-arry.len = arra.len;
-arry.stack = malloc(arra.len * sizeof(int));
-arry = ft_sort(&arra);
-for(i = 0; i < arry.len; i++)
-	printf("%d\n", arry.stack[i]);*/
+		printf("%d\n", arrb.stack[i]);
+	printf("----------\n"); */
 }

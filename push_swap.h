@@ -19,12 +19,11 @@ void ft_sb(t_stack *arrb);
 void ft_rb(t_stack *arrb);
 void ft_rrb(t_stack *arrb);
 void call(char *s, void (*f)(t_stack *arr), t_stack *t);
-t_stack	ft_sort(t_stack *arr, int len);
-void sort_a3(t_stack *arra, t_stack *arrb);
 void sort_a2(t_stack *arra, t_stack *arrb);
 char *sort_a1(t_stack *arra);
-t_stack ft_sortpart(t_stack *arr, t_stack *start);
-void	ft_empty_1(t_stack *arra, t_stack *arrb);
-void	ft_empty_2(t_stack *arra, t_stack *arrb);
-int	ft_comparison(t_stack *arry, int nb);
+t_stack	ft_found_lis(t_stack *arra);
+int	ft_count_lis(t_stack *len);
+t_stack	ft_lis(t_stack *len, t_stack *arra);
+int ft_indec(t_stack *len, int count, t_stack *arra);
+t_stack ft_lis(t_stack *len, t_stack *arra);
 #endif
