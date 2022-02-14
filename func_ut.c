@@ -224,7 +224,7 @@ t_stack	ft_found_lis(t_stack *arra)
 		j = 0;
 		while (j < i)
 		{
-			if (arra->stack[i] > arra->stack[j] && len.stack[i] < len.stack[j] + 1)
+			if (arra->stack[i] > arra->stack[j] && len.stack[i] <= len.stack[j] + 1)
 				len.stack[i] = len.stack[j] + 1;
 			j++;
 		}
@@ -249,7 +249,7 @@ int	ft_count_lis(t_stack *len)
 	return (count);
 }
 
-t_stack ft_lis(t_stack *len, t_stack *arra)
+t_stack ft_indec(t_stack *len, t_stack *arra)
 {
 	int i;
 	int j;
@@ -263,16 +263,332 @@ t_stack ft_lis(t_stack *len, t_stack *arra)
 		j = 0;
 		while (j < i)
 		{
-			if (arra->stack[i] > arra->stack[j])
-			{
+			if (arra->stack[i] > arra->stack[j] && len->stack[i] <= len->stack[j] + 1)
 				indec.stack[i] = j;
-				printf("J-- %d\n",  arra->stack[j]);
-				printf("i-- %d\n",  arra->stack[i]);
-
-			}	
 			j++;
 		}
 		i++;
 	}
 	return (indec);
+}
+
+t_stack ft_indec_sub_sq(t_stack *indec, t_stack *len, int count)
+{
+	int i;
+	int j;
+	int indc_count;
+	t_stack sub_sq;
+
+	i = 0;
+	sub_sq.len = count;
+	sub_sq.stack = malloc(count * sizeof(int));
+	while (i < len->len)
+	{
+		if (len->stack[i] == count)
+			indc_count = i;
+		i++;
+	}
+	sub_sq.stack[count - 1] = indc_count;
+	j = count - 2;
+	i = len->len;
+	while (i >= 0)
+	{
+		if (i == indc_count)
+		{
+			sub_sq.stack[j] = indec->stack[i];
+			indc_count = indec->stack[i];
+			j--;
+		}
+		i--;
+	}
+	return (sub_sq);
+}
+
+t_stack ft_sub_sq(t_stack *arra, t_stack *sub_sq, int count)
+{
+	int i;
+	int j;
+	t_stack lis;
+
+	i = 0;
+	j = 0;
+	lis.len = count;
+	lis.stack = malloc (count * sizeof(int));
+	while (i < arra->len)
+	{
+		if (i == sub_sq->stack[j])
+		{
+			lis.stack[j] = arra->stack[i];
+			j++;
+		}
+		i++;	
+	}
+	return (lis);
+}
+
+void ft_push_not_lis(t_stack *lis, t_stack *arra, t_stack *arrb)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (arra->len > lis->len)
+	{
+		j = 0;
+		while (j < lis->len)
+		{
+			if (arra->stack[i] == lis->stack[j])
+				call("ra\n", ft_ra, arra);	
+			j++;	
+		}
+		ft_pb(arra,arrb);
+	}
+}
+
+actions	ft_mouves(t_stack *arra, t_stack *arrb)
+{
+	int	i;
+	int	j;
+	int max;
+	int min;
+	actions	mouves;
+
+	j = 0;
+	max = -2147483648;
+	min = 2147483647;
+	mouves.mouves_a.len = arrb->len;
+	mouves.mouves_a.stack = malloc (arrb->len * sizeof(int));
+	mouves.mouves_b.len = arrb->len;
+	mouves.mouves_b.stack = malloc (arrb->len * sizeof(int));
+
+	i = 0;
+	while (i < arra->len)
+	{
+		if (arra->stack[i] > max)
+			max = arra->stack[i];
+		if (arra->stack[i] < min)
+			min = arra->stack[i];
+		i++;	
+	}
+	while (j < arrb->len)
+	{
+		i = 0;
+		while (i < arra->len)
+		{
+			if (arra->stack[i] < arrb->stack[j] && arra->stack[i + 1] > arrb->stack[j])
+			{
+				if (j <= (arrb->len - 1) / 2)
+					mouves.mouves_b.stack[j] = j;
+				if (j > (arrb->len - 1) / 2)
+					mouves.mouves_b.stack[j] = (((arrb->len - j) + 1) * (-1));
+				if (i + 1 <= (arra->len - 1) / 2)
+					mouves.mouves_a.stack[j] = i;
+				if (i + 1 > (arra->len - 1) / 2)
+					mouves.mouves_a.stack[j] = (((arra->len - j) + 1) * (-1));
+			}
+			i++;
+		}
+		if (arrb->stack[j] > max)
+		{
+			i = 0;
+			while (i < arra->len)
+			{
+				if (i == max)
+				{
+					if (j <= (arrb->len - 1) / 2)
+						mouves.mouves_b.stack[j] = j;
+					if (j > (arrb->len - 1) / 2)
+						mouves.mouves_b.stack[j] = (((arrb->len - j) + 1) * (-1));
+					if (i <= (arra->len - 1) / 2)
+						mouves.mouves_a.stack[j] = i;
+					if (i > (arra->len - 1) / 2)
+						mouves.mouves_a.stack[j] = (((arra->len - j) + 1) * (-1));
+				}
+				i++;
+			}
+		}
+		if (arrb->stack[j] < min)
+		{
+			i = 0;
+			while (i < arra->len)
+			{
+				if (i == min)
+				{
+					if (j <= (arrb->len - 1) / 2)
+						mouves.mouves_b.stack[j] = j;
+					if (j > (arrb->len - 1) / 2)
+						mouves.mouves_b.stack[j] = (((arrb->len - j) + 1) * (-1));
+					if (i <= (arra->len - 1) / 2)
+						mouves.mouves_a.stack[j] = i;
+					if (i > (arra->len - 1) / 2)
+						mouves.mouves_a.stack[j] = (((arra->len - j) + 1) * (-1));
+				}
+				i++;
+			}
+		}
+		j++;
+	}
+	return (mouves);
+}
+
+void	ft_push_arra(t_stack *arra, t_stack *arrb)
+{
+	int i;
+	int min;
+	int	repet;
+	int rest;
+	actions	mouves;
+
+
+	i = 0;
+	min = 2147483647;
+	mouves = ft_mouves(arra, arrb);
+	while (i < arrb->len)
+	{
+		if (mouves.mouves_a.stack[i] + mouves.mouves_b.stack[i] < min)
+		{
+			min = mouves.mouves_a.stack[i] + mouves.mouves_b.stack[i];
+			mouves.indec_nb = i;
+		}
+		i++;	
+	}
+	while (mouves.mouves_b.len > 0)
+	{
+	if (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0)
+	{
+		if (mouves.mouves_b.stack[mouves.indec_nb] > mouves.mouves_a.stack[mouves.indec_nb])
+		{
+			rest = mouves.mouves_b.stack[mouves.indec_nb] - mouves.mouves_a.stack[mouves.indec_nb];
+			repet = mouves.mouves_a.stack[mouves.indec_nb];
+			while (repet > 0)
+			{
+				ft_rr(arrb,arra);
+				repet--;
+			}
+			while (rest > 0)
+			{
+				call("rb\n", ft_rb, arrb);
+				rest--;
+			}
+			ft_pa(arra,arrb);
+		}
+			
+		if (mouves.mouves_a.stack[mouves.indec_nb] > mouves.mouves_b.stack[mouves.indec_nb])
+		{
+			rest = mouves.mouves_a.stack[mouves.indec_nb] - mouves.mouves_b.stack[mouves.indec_nb];
+			repet = mouves.mouves_b.stack[mouves.indec_nb];
+				while (repet > 0)
+			{
+				ft_rr(arrb,arra);
+				repet--;
+			}
+			while (rest > 0)
+			{
+				call("ra\n", ft_ra, arra);
+				rest--;
+			}
+			ft_pa(arra,arrb);
+		}
+		if (mouves.mouves_a.stack[mouves.indec_nb] == mouves.mouves_b.stack[mouves.indec_nb] && mouves.mouves_a.stack[mouves.indec_nb] != 0)
+		{
+			repet = mouves.mouves_a.stack[mouves.indec_nb];
+				while (repet > 0)
+			{
+				ft_rr(arrb,arra);
+				repet--;
+			}
+			ft_pa(arra,arrb);
+		}
+		ft_pa(arra,arrb);
+	}
+	if (mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0)
+	{
+		if ((mouves.mouves_b.stack[mouves.indec_nb] * (-1)) > (mouves.mouves_a.stack[mouves.indec_nb] * (-1)))
+		{
+			rest = (mouves.mouves_b.stack[mouves.indec_nb] * (-1)) - (mouves.mouves_a.stack[mouves.indec_nb] * (-1));
+			repet = (mouves.mouves_a.stack[mouves.indec_nb] * (-1));
+			while (repet > 0)
+			{
+				ft_rrr(arrb,arra);
+				repet--;
+			}
+			while (rest > 0)
+			{
+				call("rrb\n", ft_rrb, arrb);
+				rest--;
+			}
+			ft_pa(arra,arrb);
+		}
+			
+		if ((mouves.mouves_a.stack[mouves.indec_nb] * (-1)) > (mouves.mouves_b.stack[mouves.indec_nb] * (-1)))
+		{
+			rest = (mouves.mouves_a.stack[mouves.indec_nb] * (-1)) - (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
+			repet = (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
+				while (repet > 0)
+			{
+				ft_rrr(arrb,arra);
+				repet--;
+			}
+			while (rest > 0)
+			{
+				call("rra\n", ft_rra, arra);
+				rest--;
+			}
+			ft_pa(arra,arrb);
+		}
+		if (mouves.mouves_a.stack[mouves.indec_nb] == mouves.mouves_b.stack[mouves.indec_nb] && mouves.mouves_a.stack[mouves.indec_nb] != 0)
+		{
+			repet = (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
+				while (repet > 0)
+			{
+				ft_rrr(arrb,arra);
+				repet--;
+			}
+			ft_pa(arra,arrb);
+		}
+		ft_pa(arra,arrb);
+	}
+	if ((mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0) || (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0))
+	{
+		if (mouves.mouves_b.stack[mouves.indec_nb] > 0)
+		{
+			repet = mouves.mouves_b.stack[mouves.indec_nb];
+			while (repet > 0)
+			{
+				call("rb\n", ft_rb, arrb);
+				repet--;
+			}
+		}
+		if (mouves.mouves_b.stack[mouves.indec_nb] < 0)
+		{
+			repet = (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
+			while (repet > 0)
+			{
+				call("rrb\n", ft_rrb, arrb);
+				repet--;
+			}
+		}
+		if (mouves.mouves_a.stack[mouves.indec_nb] > 0)
+		{
+			repet = mouves.mouves_a.stack[mouves.indec_nb];
+			while (repet > 0)
+			{
+				call("ra\n", ft_ra, arra);
+				repet--;
+			}
+		}
+		if (mouves.mouves_a.stack[mouves.indec_nb] < 0)
+		{
+			repet = (mouves.mouves_a.stack[mouves.indec_nb] * (-1));
+			while (repet > 0)
+			{
+				call("rra\n", ft_rra, arra);
+				repet--;
+			}
+		}
+		ft_pa(arra,arrb);
+	}
+	ft_pa(arra,arrb);
+	mouves = ft_mouves(arra, arrb);
+	}
 }

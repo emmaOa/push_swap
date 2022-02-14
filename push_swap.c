@@ -87,14 +87,17 @@ int main(int arc, char **arv)
 	int count;
 	t_stack	len;
 	t_stack lis;
+	t_stack sub;
 	t_stack	arra;
 	t_stack	arrb;
+	t_stack sub_sq;
 	int max;
 	i = 0;
 	len.len = arra.len;
 	len.stack = malloc(arra.len * sizeof(int));
 	arra.len = arc - 1;
 	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
+	arrb.len = 0;
 	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
 
 	while (i < arc - 1)
@@ -103,21 +106,23 @@ int main(int arc, char **arv)
 		i++;
 	}
 	len = ft_found_lis(&arra);
-	for(i = 0; i < arra.len; i++)
-		printf("len %d\n", len.stack[i]);
 	count = ft_count_lis(&len);
-	printf("count %d\n", count);
+	sub_sq.len = count;
+	sub_sq.stack = malloc (count * sizeof(int));
 	lis.len = count;
 	lis.stack = malloc(count * sizeof(int));
-	lis = ft_lis(&len, &arra);
-	for (i = 0; i < lis .len; i++)
-		printf("valeur-- %d\n", lis.stack[i]);
-	
-	/*printf("----------\n");
+	lis = ft_indec(&len, &arra);
+	sub_sq = ft_indec_sub_sq(&lis, &len, count);
+	sub.len = count;
+	sub.stack = malloc(count * sizeof(int));
+	sub = ft_sub_sq(&arra, &sub_sq, count);
+	ft_push_not_lis(&sub, &arra, &arrb);
+	ft_push_arra(&arra, &arrb);
 	for(i = 0; i < arra.len; i++)
 		printf("%d\n", arra.stack[i]);
 	printf("----------\n");
+
 	for(i = 0; i < arrb.len; i++)
 		printf("%d\n", arrb.stack[i]);
-	printf("----------\n"); */
+	printf("----------\n"); 
 }
