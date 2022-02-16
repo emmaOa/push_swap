@@ -360,7 +360,6 @@ actions	ft_mouves(t_stack *arra, t_stack *arrb)
 	mouves.mouves_a.stack = malloc (arrb->len * sizeof(int));
 	mouves.mouves_b.len = arrb->len;
 	mouves.mouves_b.stack = malloc (arrb->len * sizeof(int));
-
 	i = 0;
 	while (i < arra->len)
 	{
@@ -372,62 +371,13 @@ actions	ft_mouves(t_stack *arra, t_stack *arrb)
 	}
 	while (j < arrb->len)
 	{
-		i = 0;
-		while (i < arra->len)
-		{
-			if (arra->stack[i] < arrb->stack[j] && arra->stack[i + 1] > arrb->stack[j])
-			{
-				if (j <= (arrb->len - 1) / 2)
-					mouves.mouves_b.stack[j] = j;
-				if (j > (arrb->len - 1) / 2)
-					mouves.mouves_b.stack[j] = (((arrb->len - j) + 1) * (-1));
-				if (i + 1 <= (arra->len - 1) / 2)
-					mouves.mouves_a.stack[j] = i;
-				if (i + 1 > (arra->len - 1) / 2)
-					mouves.mouves_a.stack[j] = (((arra->len - j) + 1) * (-1));
-			}
-			i++;
-		}
-		if (arrb->stack[j] > max)
-		{
-			i = 0;
-			while (i < arra->len)
-			{
-				if (i == max)
-				{
-					if (j <= (arrb->len - 1) / 2)
-						mouves.mouves_b.stack[j] = j;
-					if (j > (arrb->len - 1) / 2)
-						mouves.mouves_b.stack[j] = (((arrb->len - j) + 1) * (-1));
-					if (i <= (arra->len - 1) / 2)
-						mouves.mouves_a.stack[j] = i;
-					if (i > (arra->len - 1) / 2)
-						mouves.mouves_a.stack[j] = (((arra->len - j) + 1) * (-1));
-				}
-				i++;
-			}
-		}
-		if (arrb->stack[j] < min)
-		{
-			i = 0;
-			while (i < arra->len)
-			{
-				if (i == min)
-				{
-					if (j <= (arrb->len - 1) / 2)
-						mouves.mouves_b.stack[j] = j;
-					if (j > (arrb->len - 1) / 2)
-						mouves.mouves_b.stack[j] = (((arrb->len - j) + 1) * (-1));
-					if (i <= (arra->len - 1) / 2)
-						mouves.mouves_a.stack[j] = i;
-					if (i > (arra->len - 1) / 2)
-						mouves.mouves_a.stack[j] = (((arra->len - j) + 1) * (-1));
-				}
-				i++;
-			}
-		}
+		ft_mouves_max(arra, arrb, &mouves, max, j);
+		ft_mouves_min(arra, arrb, &mouves, min, j);
+		ft_mouves_top(arra, arrb, &mouves, j);
+		ft_mouves_normal(arra, arrb, &mouves, j);	
 		j++;
 	}
+	ft_mouves_arrb(arrb, &mouves);
 	return (mouves);
 }
 
@@ -439,20 +389,23 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 	int rest;
 	actions	mouves;
 
-
 	i = 0;
 	min = 2147483647;
 	mouves = ft_mouves(arra, arrb);
-	while (i < arrb->len)
+	while (i < mouves.mouves_a.len)
 	{
-		if (mouves.mouves_a.stack[i] + mouves.mouves_b.stack[i] < min)
+		if (abs(mouves.mouves_a.stack[i]) + abs(mouves.mouves_b.stack[i]) < min)
 		{
 			min = mouves.mouves_a.stack[i] + mouves.mouves_b.stack[i];
 			mouves.indec_nb = i;
 		}
 		i++;	
 	}
-	while (mouves.mouves_b.len > 0)
+	/*if (min < 0)
+		min = min * (-1);*/
+	printf(" min %d\n", min);
+	printf(" indec %d\n", mouves.indec_nb);
+	while (arrb->len > 0)
 	{
 	if (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0)
 	{
@@ -503,10 +456,11 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 	}
 	if (mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0)
 	{
-		if ((mouves.mouves_b.stack[mouves.indec_nb] * (-1)) > (mouves.mouves_a.stack[mouves.indec_nb] * (-1)))
+		ft_arra_arrb_negative(arra, arrb, &mouves);
+	/*	if (abs(mouves.mouves_b.stack[mouves.indec_nb]) > abs(mouves.mouves_a.stack[mouves.indec_nb]))
 		{
-			rest = (mouves.mouves_b.stack[mouves.indec_nb] * (-1)) - (mouves.mouves_a.stack[mouves.indec_nb] * (-1));
-			repet = (mouves.mouves_a.stack[mouves.indec_nb] * (-1));
+			rest = abs(mouves.mouves_b.stack[mouves.indec_nb]) - abs(mouves.mouves_a.stack[mouves.indec_nb]);
+			repet = abs(mouves.mouves_a.stack[mouves.indec_nb]);
 			while (repet > 0)
 			{
 				ft_rrr(arrb,arra);
@@ -520,10 +474,10 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 			ft_pa(arra,arrb);
 		}
 			
-		if ((mouves.mouves_a.stack[mouves.indec_nb] * (-1)) > (mouves.mouves_b.stack[mouves.indec_nb] * (-1)))
+		if (abs(mouves.mouves_a.stack[mouves.indec_nb]) > abs(mouves.mouves_b.stack[mouves.indec_nb]))
 		{
-			rest = (mouves.mouves_a.stack[mouves.indec_nb] * (-1)) - (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
-			repet = (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
+			rest = abs(mouves.mouves_a.stack[mouves.indec_nb]) - abs(mouves.mouves_b.stack[mouves.indec_nb]);
+			repet = abs(mouves.mouves_b.stack[mouves.indec_nb]);
 				while (repet > 0)
 			{
 				ft_rrr(arrb,arra);
@@ -546,7 +500,7 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 			}
 			ft_pa(arra,arrb);
 		}
-		ft_pa(arra,arrb);
+		ft_pa(arra,arrb);*/
 	}
 	if ((mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0) || (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0))
 	{
@@ -588,7 +542,8 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 		}
 		ft_pa(arra,arrb);
 	}
-	ft_pa(arra,arrb);
+	else
+		ft_pa(arra,arrb);
 	mouves = ft_mouves(arra, arrb);
 	}
 }

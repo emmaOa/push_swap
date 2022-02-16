@@ -91,6 +91,7 @@ int main(int arc, char **arv)
 	t_stack	arra;
 	t_stack	arrb;
 	t_stack sub_sq;
+	actions	mouves;
 	int max;
 	i = 0;
 	len.len = arra.len;
@@ -99,6 +100,11 @@ int main(int arc, char **arv)
 	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
 	arrb.len = 0;
 	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
+
+	mouves.mouves_a.len = arrb.len;
+	mouves.mouves_a.stack = malloc (arrb.len * sizeof(int));
+	mouves.mouves_b.len = arrb.len;
+	mouves.mouves_b.stack = malloc (arrb.len * sizeof(int));
 
 	while (i < arc - 1)
 	{
@@ -117,7 +123,18 @@ int main(int arc, char **arv)
 	sub.stack = malloc(count * sizeof(int));
 	sub = ft_sub_sq(&arra, &sub_sq, count);
 	ft_push_not_lis(&sub, &arra, &arrb);
+	
+	mouves = ft_mouves(&arra, &arrb);
+
+	printf("---- mouves_arra----\n");
+	for(i = 0; i < mouves.mouves_a.len; i++)
+		printf("%d\n", mouves.mouves_a.stack[i]);
+	printf("-----mouves_arrb----\n");
+	for(i = 0; i < mouves.mouves_b.len; i++)
+		printf("%d\n", mouves.mouves_b.stack[i]);
+	printf("----------\n");
 	ft_push_arra(&arra, &arrb);
+
 	for(i = 0; i < arra.len; i++)
 		printf("%d\n", arra.stack[i]);
 	printf("----------\n");
