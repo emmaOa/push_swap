@@ -2,6 +2,13 @@
 #include "libft.h"
 #include "push_swap.h"
 #include <stdio.h>
+
+int ft_abs(int n)
+{
+	if (n < 0)
+		return (n * -1);
+	return (n);
+}
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;
@@ -115,7 +122,7 @@ void ft_pb(t_stack *arra, t_stack *arrb)
 	}
 	arrb->stack[0] = arra->stack[0];
 	i = 0;
-	while (i < arra->len)
+	while (i < arra->len - 1)
 	{
 		arra->stack[i] = arra->stack[i + 1];
 		i++;
@@ -131,7 +138,7 @@ void ft_ra(t_stack *arra)
 
 	i = 0;
 	tmp = arra->stack[i];
-	while (i < arra->len)
+	while (i < arra->len - 1)
 	{
 		arra->stack[i] = arra->stack[i + 1];
 		i++;
@@ -291,7 +298,7 @@ t_stack ft_indec_sub_sq(t_stack *indec, t_stack *len, int count)
 	sub_sq.stack[count - 1] = indc_count;
 	j = count - 2;
 	i = len->len;
-	while (i >= 0)
+	while (i > 0)
 	{
 		if (i == indc_count)
 		{
@@ -372,7 +379,7 @@ actions	ft_mouves(t_stack *arra, t_stack *arrb)
 	while (j < arrb->len)
 	{
 		ft_mouves_max(arra, arrb, &mouves, max, j);
-		ft_mouves_min(arra, arrb, &mouves, min, j);
+		//ft_mouves_min(arra, arrb, &mouves, min, j);
 		ft_mouves_top(arra, arrb, &mouves, j);
 		ft_mouves_normal(arra, arrb, &mouves, j);	
 		j++;
@@ -391,120 +398,48 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 
 	i = 0;
 	min = 2147483647;
+	
 	mouves = ft_mouves(arra, arrb);
 	while (i < mouves.mouves_a.len)
 	{
-		if (abs(mouves.mouves_a.stack[i]) + abs(mouves.mouves_b.stack[i]) < min)
-		{
-			min = mouves.mouves_a.stack[i] + mouves.mouves_b.stack[i];
+		if (ft_abs(mouves.mouves_a.stack[i]) + ft_abs(mouves.mouves_b.stack[i]) < min)
+		{	
+			min = ft_abs(mouves.mouves_a.stack[i]) + ft_abs(mouves.mouves_b.stack[i]);
 			mouves.indec_nb = i;
 		}
+	
 		i++;	
 	}
-	/*if (min < 0)
-		min = min * (-1);*/
-	printf(" min %d\n", min);
-	printf(" indec %d\n", mouves.indec_nb);
+	i = 0;
 	while (arrb->len > 0)
 	{
-	if (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0)
-	{
-		if (mouves.mouves_b.stack[mouves.indec_nb] > mouves.mouves_a.stack[mouves.indec_nb])
+		printf("------------------dp---\n");
+		
+		if (mouves.mouves_b.stack[mouves.indec_nb] == 0 && mouves.mouves_a.stack[mouves.indec_nb] == 0)
 		{
-			rest = mouves.mouves_b.stack[mouves.indec_nb] - mouves.mouves_a.stack[mouves.indec_nb];
-			repet = mouves.mouves_a.stack[mouves.indec_nb];
-			while (repet > 0)
-			{
-				ft_rr(arrb,arra);
-				repet--;
-			}
-			while (rest > 0)
-			{
-				call("rb\n", ft_rb, arrb);
-				rest--;
-			}
+			printf("arrb arra = 0\n");
 			ft_pa(arra,arrb);
+			
 		}
 			
-		if (mouves.mouves_a.stack[mouves.indec_nb] > mouves.mouves_b.stack[mouves.indec_nb])
+		if (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0)
 		{
-			rest = mouves.mouves_a.stack[mouves.indec_nb] - mouves.mouves_b.stack[mouves.indec_nb];
-			repet = mouves.mouves_b.stack[mouves.indec_nb];
-				while (repet > 0)
-			{
-				ft_rr(arrb,arra);
-				repet--;
-			}
-			while (rest > 0)
-			{
-				call("ra\n", ft_ra, arra);
-				rest--;
-			}
-			ft_pa(arra,arrb);
-		}
-		if (mouves.mouves_a.stack[mouves.indec_nb] == mouves.mouves_b.stack[mouves.indec_nb] && mouves.mouves_a.stack[mouves.indec_nb] != 0)
-		{
-			repet = mouves.mouves_a.stack[mouves.indec_nb];
-				while (repet > 0)
-			{
-				ft_rr(arrb,arra);
-				repet--;
-			}
-			ft_pa(arra,arrb);
-		}
-		ft_pa(arra,arrb);
-	}
-	if (mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0)
-	{
-		ft_arra_arrb_negative(arra, arrb, &mouves);
-	/*	if (abs(mouves.mouves_b.stack[mouves.indec_nb]) > abs(mouves.mouves_a.stack[mouves.indec_nb]))
-		{
-			rest = abs(mouves.mouves_b.stack[mouves.indec_nb]) - abs(mouves.mouves_a.stack[mouves.indec_nb]);
-			repet = abs(mouves.mouves_a.stack[mouves.indec_nb]);
-			while (repet > 0)
-			{
-				ft_rrr(arrb,arra);
-				repet--;
-			}
-			while (rest > 0)
-			{
-				call("rrb\n", ft_rrb, arrb);
-				rest--;
-			}
-			ft_pa(arra,arrb);
+			printf("arra arrb positive\n");
+			ft_arra_arrb_negative(arra, arrb, &mouves);
+			
 		}
 			
-		if (abs(mouves.mouves_a.stack[mouves.indec_nb]) > abs(mouves.mouves_b.stack[mouves.indec_nb]))
+		if (mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0)
 		{
-			rest = abs(mouves.mouves_a.stack[mouves.indec_nb]) - abs(mouves.mouves_b.stack[mouves.indec_nb]);
-			repet = abs(mouves.mouves_b.stack[mouves.indec_nb]);
-				while (repet > 0)
-			{
-				ft_rrr(arrb,arra);
-				repet--;
-			}
-			while (rest > 0)
-			{
-				call("rra\n", ft_rra, arra);
-				rest--;
-			}
-			ft_pa(arra,arrb);
+			printf("arra arrb negative\n");
+			ft_arra_arrb_negative(arra, arrb, &mouves);
+			
 		}
-		if (mouves.mouves_a.stack[mouves.indec_nb] == mouves.mouves_b.stack[mouves.indec_nb] && mouves.mouves_a.stack[mouves.indec_nb] != 0)
-		{
-			repet = (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
-				while (repet > 0)
-			{
-				ft_rrr(arrb,arra);
-				repet--;
-			}
-			ft_pa(arra,arrb);
-		}
-		ft_pa(arra,arrb);*/
-	}
-	if ((mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0) || (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0))
+				
+	if ((mouves.mouves_b.stack[mouves.indec_nb] < 0 && mouves.mouves_a.stack[mouves.indec_nb] > 0) || (mouves.mouves_b.stack[mouves.indec_nb] > 0 && mouves.mouves_a.stack[mouves.indec_nb] < 0))
 	{
-		if (mouves.mouves_b.stack[mouves.indec_nb] > 0)
+		printf("arra arrb def\n");
+		if (mouves.mouves_b.stack[mouves.indec_nb] >= 0)
 		{
 			repet = mouves.mouves_b.stack[mouves.indec_nb];
 			while (repet > 0)
@@ -513,16 +448,16 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 				repet--;
 			}
 		}
-		if (mouves.mouves_b.stack[mouves.indec_nb] < 0)
+		if (mouves.mouves_b.stack[mouves.indec_nb] <= 0)
 		{
-			repet = (mouves.mouves_b.stack[mouves.indec_nb] * (-1));
+			repet = ft_abs(mouves.mouves_b.stack[mouves.indec_nb]);
 			while (repet > 0)
 			{
 				call("rrb\n", ft_rrb, arrb);
 				repet--;
 			}
 		}
-		if (mouves.mouves_a.stack[mouves.indec_nb] > 0)
+		if (mouves.mouves_a.stack[mouves.indec_nb] >= 0)
 		{
 			repet = mouves.mouves_a.stack[mouves.indec_nb];
 			while (repet > 0)
@@ -531,9 +466,9 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 				repet--;
 			}
 		}
-		if (mouves.mouves_a.stack[mouves.indec_nb] < 0)
+		if (mouves.mouves_a.stack[mouves.indec_nb] <= 0)
 		{
-			repet = (mouves.mouves_a.stack[mouves.indec_nb] * (-1));
+			repet = ft_abs(mouves.mouves_a.stack[mouves.indec_nb]);
 			while (repet > 0)
 			{
 				call("rra\n", ft_rra, arra);
@@ -542,8 +477,53 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 		}
 		ft_pa(arra,arrb);
 	}
-	else
-		ft_pa(arra,arrb);
+	
 	mouves = ft_mouves(arra, arrb);
+	i = 0;
+	min = 2147483647;
+	while (i < mouves.mouves_a.len)
+	{
+		if (ft_abs(mouves.mouves_a.stack[i]) + ft_abs(mouves.mouves_b.stack[i]) < min)
+		{
+			min = ft_abs(mouves.mouves_a.stack[i]) + ft_abs(mouves.mouves_b.stack[i]);
+			mouves.indec_nb = i;
+			printf("valeur a %d\n",mouves.mouves_a.stack[i]);
+			printf("valeur b %d\n",mouves.mouves_b.stack[i]);
+			printf("indec %d\n" , mouves.indec_nb);
+			printf("printf%d\n", i);
+			printf("min %d\n", min);
+		}
+		
+	
+		i++;	
 	}
+		printf("---- mouves_arra----\n");
+	for(i = 0; i < mouves.mouves_a.len; i++)
+		printf("%d\n", mouves.mouves_a.stack[i]);
+	printf("-----mouves_arrb----\n");
+	for(i = 0; i < mouves.mouves_b.len; i++)
+		printf("%d\n", mouves.mouves_b.stack[i]);
+
+	
+
+
+	printf("------arra----\n");
+	for(i = 0; i < arra->len; i++)
+		printf("%d\n", arra->stack[i]);
+	printf("------arrb----\n");
+
+	for(i = 0; i < arrb->len; i++)
+		printf("%d\n", arrb->stack[i]);
+	printf("----------\n"); 
+	}
+	
+	ft_sort_arra(arra);
+	printf("------arra----\n");
+	for(i = 0; i < arra->len; i++)
+		printf("%d\n", arra->stack[i]);
+	printf("------arrb----\n");
+
+	for(i = 0; i < arrb->len; i++)
+		printf("%d\n", arrb->stack[i]);
+	printf("----------\n"); 
 }

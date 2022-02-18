@@ -24,6 +24,8 @@ void	ft_pa(t_stack *arra, t_stack *arrb);
 void	ft_sb(t_stack *arrb);
 void	ft_rb(t_stack *arrb);
 void	ft_rrb(t_stack *arrb);
+void	ft_rrr(t_stack *arrb, t_stack *arra);
+void	ft_rr(t_stack *arrb, t_stack *arra);
 void	call(char *s, void (*f)(t_stack *arr), t_stack *t);
 void	sort_a2(t_stack *arra, t_stack *arrb);
 char	*sort_a1(t_stack *arra);
@@ -40,9 +42,15 @@ void    ft_mouves_max(t_stack *arra, t_stack *arrb, actions *mouves, int max, in
 void    ft_mouves_min(t_stack *arra, t_stack *arrb, actions *mouves, int max, int j);
 void    ft_mouves_top(t_stack *arra, t_stack *arrb, actions *mouves, int j);
 void    ft_mouves_arrb(t_stack *arrb, actions *mouves);
+void    ft_arra_maximal_negative(t_stack *arra, t_stack *arrb, actions *mouves);
+void    ft_arrb_maximal_negative(t_stack *arra, t_stack *arrb, actions *mouves);
+void    ft_arra_arrb_equal_negative(t_stack *arra, t_stack *arrb, actions *mouves);
 void    ft_arra_arrb_negative(t_stack *arra, t_stack *arrb, actions *mouves);
-void    ft_arra_maximal(t_stack *arra, t_stack *arrb, actions *mouves);
-void    ft_arrb_maximal(t_stack *arra, t_stack *arrb, actions *mouves);
-void    ft_arra_arrb_equal(t_stack *arra, t_stack *arrb, actions *mouves);
+void    ft_arra_maximal_positive(t_stack *arra, t_stack *arrb, actions *mouves);
+void    ft_arrb_maximal_positive(t_stack *arra, t_stack *arrb, actions *mouves);
+void    ft_arra_arrb_equal_positive(t_stack *arra, t_stack *arrb, actions *mouves);
+void    ft_arra_arrb_positive(t_stack *arra, t_stack *arrb, actions *mouves);
+void	ft_sort_arra(t_stack *arra);
+int		ft_abs(int n);
 
 #endif
