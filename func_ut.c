@@ -376,13 +376,15 @@ actions	ft_mouves(t_stack *arra, t_stack *arrb)
 			min = arra->stack[i];
 		i++;	
 	}
-	while (j < arrb->len)
+	while (j < mouves.mouves_b.len)
 	{
-		ft_mouves_max(arra, arrb, &mouves, max, j);
-		//ft_mouves_min(arra, arrb, &mouves, min, j);
+
+		ft_mouves_max_min(arra, arrb, &mouves, max, min, j);
 		ft_mouves_top(arra, arrb, &mouves, j);
-		ft_mouves_normal(arra, arrb, &mouves, j);	
+		ft_mouves_normal_one(arra, arrb, &mouves, j);
+		ft_mouves_normal_two(arra, arrb, &mouves, j);
 		j++;
+	
 	}
 	ft_mouves_arrb(arrb, &mouves);
 	return (mouves);
@@ -410,15 +412,27 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 	
 		i++;	
 	}
+	printf("valeur a %d\n",mouves.mouves_a.stack[i]);
+	printf("valeur b %d\n",mouves.mouves_b.stack[i]);
+	printf("indec %d\n" , mouves.indec_nb);
+	printf("printf%d\n", i);
+	printf("min %d\n", min);
+		printf("---- mouves_arra----\n");
+	for(i = 0; i < mouves.mouves_a.len; i++)
+		printf("%d\n", mouves.mouves_a.stack[i]);
+	printf("-----mouves_arrb----\n");
+	for(i = 0; i < mouves.mouves_b.len; i++)
+		printf("%d\n", mouves.mouves_b.stack[i]);
 	i = 0;
 	while (arrb->len > 0)
 	{
-		printf("------------------dp---\n");
+		
 		
 		if (mouves.mouves_b.stack[mouves.indec_nb] == 0 && mouves.mouves_a.stack[mouves.indec_nb] == 0)
 		{
 			printf("arrb arra = 0\n");
 			ft_pa(arra,arrb);
+			printf("------------------dp---\n");
 			
 		}
 			
@@ -476,11 +490,13 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 			}
 		}
 		ft_pa(arra,arrb);
+		printf("------------------dp---\n");
 	}
 	
-	mouves = ft_mouves(arra, arrb);
+	
 	i = 0;
 	min = 2147483647;
+
 	while (i < mouves.mouves_a.len)
 	{
 		if (ft_abs(mouves.mouves_a.stack[i]) + ft_abs(mouves.mouves_b.stack[i]) < min)
@@ -495,7 +511,7 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 		}
 		
 	
-		i++;	
+		i++;
 	}
 		printf("---- mouves_arra----\n");
 	for(i = 0; i < mouves.mouves_a.len; i++)
@@ -514,7 +530,8 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 
 	for(i = 0; i < arrb->len; i++)
 		printf("%d\n", arrb->stack[i]);
-	printf("----------\n"); 
+	printf("----------\n");
+	mouves = ft_mouves(arra, arrb);
 	}
 	
 	ft_sort_arra(arra);
