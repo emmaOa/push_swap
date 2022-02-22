@@ -20,7 +20,6 @@ void    ft_arra_maximal_negative(t_stack *arra, t_stack *arrb, actions *mouves)
 				rest--;
 			}
 			ft_pa(arra,arrb);
-			printf("------------------dp---\n");
 }
 
 void    ft_arrb_maximal_negative(t_stack *arra, t_stack *arrb, actions *mouves)
@@ -41,7 +40,6 @@ void    ft_arrb_maximal_negative(t_stack *arra, t_stack *arrb, actions *mouves)
 				rest--;
 			}
 			ft_pa(arra,arrb);
-			printf("------------------dp---\n");
 }
 
 void    ft_arra_arrb_equal_negative(t_stack *arra, t_stack *arrb, actions *mouves)
@@ -55,14 +53,10 @@ void    ft_arra_arrb_equal_negative(t_stack *arra, t_stack *arrb, actions *mouve
 				repet--;
 			}
 			ft_pa(arra,arrb);
-			printf("------------------dp---\n");
 }
 
 void    ft_arra_arrb_negative(t_stack *arra, t_stack *arrb, actions *mouves)
 {
-    int rest;
-    int repet;
-
     	if (ft_abs(mouves->mouves_b.stack[mouves->indec_nb]) > ft_abs(mouves->mouves_a.stack[mouves->indec_nb]))
             ft_arrb_maximal_negative(arra, arrb, mouves);	
 		if (ft_abs(mouves->mouves_a.stack[mouves->indec_nb]) > ft_abs(mouves->mouves_b.stack[mouves->indec_nb]))

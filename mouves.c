@@ -2,132 +2,74 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-void    ft_mouves_normal_one(t_stack *arra, t_stack *arrb, actions *mouves, int j)
+void	 ft_mouves_top(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 {
-    int i;
-	int min1;
-	int min2;
-    
-    i = 0;
-	min2 = 2147483647;
-	min1 = 2147483647;
+	if ((arrb->stack[j] < arra->stack[0] && arrb->stack[j] > arra->stack[arra->len - 1])
+		 || (arrb->stack[j] > arra->stack[0] && arrb->stack[j] < arra->stack[arra->len - 1]))
+		mouves->mouves_a.stack[j] = 0;
+}
+
+void	ft_mouves_normal(t_stack *arra, t_stack *arrb, actions *mouves, int j)
+{
+	int i;
+
+	i = 0;
 	while (i < arra->len / 2)
 	{
-		if ((arra->stack[i] - arrb->stack[j] < min1) && arrb->stack[j] - arra->stack[i + 1] < min2)
-		{
-			min1 = arra->stack[i] - arrb->stack[j];
-			min2 = arrb->stack[j] - arra->stack[i + 1];
-		}
-		if ((arra->stack[i + 1] - arrb->stack[j] < min1) && arrb->stack[j] - arra->stack[i] < min2)
-		{
-			min1 = arra->stack[i + 1] - arrb->stack[j];
-			min2 = arrb->stack[j] - arra->stack[i];
-		}
+		if ((arrb->stack[j] > arra->stack[i] && arrb->stack[j] < arra->stack[i + 1])
+			 || (arrb->stack[j] < arra->stack[i] && arrb->stack[j] > arra->stack[i + 1]))
+			mouves->mouves_a.stack[j] = i + 1;
 		i++;
 	}
-	i = 0;
-   while (i < arra->len / 2)
-	{
-		if (((arra->stack[i] < arrb->stack[j] && arra->stack[i + 1] > arrb->stack[j]) || (arra->stack[i] > arrb->stack[j] && arra->stack[i + 1] < arrb->stack[j]))
-		 &&(((arrb->stack[j] - arra->stack[i] == min2) && (arra->stack[i + 1] - arrb->stack[j] == min1))
-		  || ((arra->stack[i] - arrb->stack[j] == min1) && (arrb->stack[j] - arra->stack[i + 1] == min2))))
-				mouves->mouves_a.stack[j] = i + 1;
-		i++;
-	}
-    
-}
-
-void    ft_mouves_normal_two(t_stack *arra, t_stack *arrb, actions *mouves, int j)
-{
-    int i;
-	int min1;
-	int min2;
-
-	min1 = 2147483647;
-	min2 = 2147483647;
-    
-    i = arra->len - 1;
-
+	i = arra->len - 1;
 	while (i > arra->len / 2)
 	{
-		if ((arra->stack[i] - arrb->stack[j] < min1) && arrb->stack[j] - arra->stack[i - 1] < min2)
-		{
-			min1 = arra->stack[i] - arrb->stack[j];
-			min2 = arrb->stack[j] - arra->stack[i - 1];
-		}
-		if ((arra->stack[i - 1] - arrb->stack[j] < min1) && arrb->stack[j] - arra->stack[i] < min2)
-		{
-			min1 = arra->stack[i - 1] - arrb->stack[j];
-			min2 = arrb->stack[j] - arra->stack[i];
-		}
-		i--;
+		if ((arrb->stack[j] < arra->stack[i] && arrb->stack[j] > arra->stack[i - 1])
+			 || (arrb->stack[j] > arra->stack[i] && arrb->stack[j] < arra->stack[i - 1]))
+			mouves->mouves_a.stack[j] = ((arra->len - 1) - i) * (-1);
+		i--; 
 	}
-	
-
-    i = arra->len - 1;
-
-   while (i > arra->len / 2)
-		{
-		if (((arra->stack[i] < arrb->stack[j] && arra->stack[i - 1] > arrb->stack[j]) || (arra->stack[i] > arrb->stack[j] && arra->stack[i - 1] < arrb->stack[j]))
-		 &&(((arrb->stack[j] - arra->stack[i] == min2) && (arra->stack[i - 1] - arrb->stack[j] == min1))
-		  || ((arra->stack[i] - arrb->stack[j] == min1) && (arrb->stack[j] - arra->stack[i - 1] == min2))))
-					mouves->mouves_a.stack[j] = ((arra->len - i) - 1) * (-1);
-			i--;
-		}
-    
 }
 
-void    ft_mouves_max_min(t_stack *arra, t_stack *arrb, actions *mouves, int max, int min, int j)
+void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 {
-    int i;
+	int i;
+	int max;
+	int indc_max;
+	int min;
+	int indc_min;	
 
-    i = 0;
+	i = 0;
+	max = INT32_MIN;
+	min = INT32_MAX;
 	while (i < arra->len)
 	{
 		if (arra->stack[i] > max)
+		{
 			max = arra->stack[i];
-		if (arra->stack[i] < min)
+			indc_max = i;
+		}			
+		else if (arra->stack[i] < min)
+		{
 			min = arra->stack[i];
+			indc_min = i;
+		}	
 		i++;	
 	}
-    if (arrb->stack[j] > max)
-		{
-			while (i < arra->len)
-			{
-				if (arra->stack[i] == max)
-				{
-					if (i <= (arra->len - 1) / 2)
-						mouves->mouves_a.stack[j] = i + 1;
-					if (i > (arra->len - 1) / 2)
-						mouves->mouves_a.stack[j] = (((arra->len - i) - 1) * (-1));
-				}
-				i++;
-			}
-		}
-	i = 0;
-	  if (arrb->stack[j] < min)
-		{
-			while (i < arra->len)
-			{
-				if (arra->stack[i] == min)
-				{
-					if (i <= (arra->len - 1) / 2)
-						mouves->mouves_a.stack[j] = i;
-					if (i > (arra->len - 1) / 2)
-						mouves->mouves_a.stack[j] = (((arra->len - i) - 1) * (-1));
-				}
-				i++;
-			}
-		}
-	i = 0;
-
-}
-
-void    ft_mouves_top(t_stack *arra, t_stack *arrb, actions *mouves, int j)
-{
-	// (j < arra->stack[0] && j > arra->stack[arra->len - 1]) || (
-    if (j > arra->stack[0] && j < arra->stack[arra->len - 1])
-		mouves->mouves_a.stack[j] = 0;
+	if (arrb->stack[j] > max)
+	{
+		if (indc_max <= arra->len / 2)
+			mouves->mouves_a.stack[j] = indc_max + 1;
+		if (indc_max > arra->len / 2)
+			mouves->mouves_a.stack[j] = ((arra->len - 1) - indc_max) * (-1);
+	}
+	if (arrb->stack[j] < min)
+	{
+		if (indc_min <= arra->len / 2)
+			mouves->mouves_a.stack[j] = indc_min;
+		if (indc_min > arra->len / 2)
+			mouves->mouves_a.stack[j] = ((arra->len - 1) - indc_min) * (-1);
+	}
 }
 
 void    ft_mouves_arrb(t_stack *arrb, actions *mouves)
@@ -135,14 +77,6 @@ void    ft_mouves_arrb(t_stack *arrb, actions *mouves)
     int i;
     int j;
 
-	j = mouves->mouves_b.len - 1;
-    i = -1;
-    while (j >= arrb->len / 2)
-    {
-        mouves->mouves_b.stack[j] = i;
-        j--;
-        i--;
-    }
     i = 0;
     j = 0;
      while (j < arrb->len / 2)
@@ -151,6 +85,15 @@ void    ft_mouves_arrb(t_stack *arrb, actions *mouves)
         j++;
         i++;
     }
+	j = mouves->mouves_b.len - 1;
+    i = -1;
+    while (j >= arrb->len / 2)
+    {
+        mouves->mouves_b.stack[j] = i;
+        j--;
+        i--;
+    }
+
 }
 
 void	ft_sort_arra(t_stack *arra)
@@ -176,7 +119,6 @@ void	ft_sort_arra(t_stack *arra)
 	{
 		while (indec > 0)
 		{
-			printf("cas 1\n");
 			call("ra\n", ft_ra, arra);
 			indec--;
 		}
@@ -186,7 +128,6 @@ void	ft_sort_arra(t_stack *arra)
 	{
 		while (j > 0)
 		{
-			printf("cas 2\n");
 			call("rra\n", ft_rra, arra);
 			j--;
 		}
