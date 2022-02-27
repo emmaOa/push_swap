@@ -14,20 +14,17 @@ void	ft_mouves_normal(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 	int i;
 
 	i = 0;
-	while (i < arra->len / 2)
+	while (i < arra->len - 1)
 	{
 		if ((arrb->stack[j] > arra->stack[i] && arrb->stack[j] < arra->stack[i + 1])
 			 || (arrb->stack[j] < arra->stack[i] && arrb->stack[j] > arra->stack[i + 1]))
-			mouves->mouves_a.stack[j] = i + 1;
+		{
+			if ((i + 1) <= (arra->len / 2))
+				mouves->mouves_a.stack[j] = i + 1;
+			else if ((i + 1) > (arra->len / 2))
+				mouves->mouves_a.stack[j] = (arra->len - (i + 1)) * (-1);
+		}
 		i++;
-	}
-	i = arra->len - 1;
-	while (i > arra->len / 2)
-	{
-		if ((arrb->stack[j] < arra->stack[i] && arrb->stack[j] > arra->stack[i - 1])
-			 || (arrb->stack[j] > arra->stack[i] && arrb->stack[j] < arra->stack[i - 1]))
-			mouves->mouves_a.stack[j] = ((arra->len - 1) - i) * (-1);
-		i--; 
 	}
 }
 
@@ -61,14 +58,14 @@ void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 		if (indc_max <= arra->len / 2)
 			mouves->mouves_a.stack[j] = indc_max + 1;
 		if (indc_max > arra->len / 2)
-			mouves->mouves_a.stack[j] = ((arra->len - 1) - indc_max) * (-1);
+			mouves->mouves_a.stack[j] = (arra->len - indc_max) * (-1);
 	}
 	if (arrb->stack[j] < min)
 	{
 		if (indc_min <= arra->len / 2)
 			mouves->mouves_a.stack[j] = indc_min;
 		if (indc_min > arra->len / 2)
-			mouves->mouves_a.stack[j] = ((arra->len - 1) - indc_min) * (-1);
+			mouves->mouves_a.stack[j] = (arra->len - indc_min) * (-1);
 	}
 }
 

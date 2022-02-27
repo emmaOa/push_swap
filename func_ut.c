@@ -330,6 +330,9 @@ t_stack ft_sub_sq(t_stack *arra, t_stack *sub_sq, int count)
 		}
 		i++;	
 	}
+	for (int k = 0; k < lis.len; k++)
+		printf("------longes subsq inc -----%d\n", lis.stack[k]);
+	printf("***********\n");
 	return (lis);
 }
 
@@ -352,23 +355,54 @@ void ft_push_not_lis(t_stack *lis, t_stack *arra, t_stack *arrb)
 	}
 }
 
+// actions	ft_mouves(t_stack *arra, t_stack *arrb)
+// {
+// 	int	j;
+// 	actions	mouves;
+
+// 	j = 0;
+// 	mouves.mouves_a.len = arrb->len;
+// 	mouves.mouves_a.stack = malloc (arrb->len * sizeof(int));
+// 	mouves.mouves_b.len = arrb->len;
+// 	mouves.mouves_b.stack = malloc (arrb->len * sizeof(int));
+// 	while (j < arrb->len)
+// 	{
+// 		ft_mouves_top(arra, arrb, &mouves, j);
+// 		ft_mouves_normal(arra, arrb, &mouves, j);
+// 		ft_mouves_mm(arra, arrb, &mouves, j);
+// 		j++;
+// 	}
+// 	ft_mouves_arrb(arrb, &mouves);
+// 	return (mouves);
+// }
+
 actions	ft_mouves(t_stack *arra, t_stack *arrb)
 {
-	int	j;
-	actions	mouves;
+	actions mouves;
+	int i;
+	int j;
 
+	i = 0;
 	j = 0;
 	mouves.mouves_a.len = arrb->len;
 	mouves.mouves_a.stack = malloc (arrb->len * sizeof(int));
 	mouves.mouves_b.len = arrb->len;
 	mouves.mouves_b.stack = malloc (arrb->len * sizeof(int));
-	while (j < arrb->len)
+
+	while (i < arrb->len)
 	{
-		printf("jjjjj%d\n", j);
-		ft_mouves_top(arra, arrb, &mouves, j);
-		ft_mouves_normal(arra, arrb, &mouves, j);
-		ft_mouves_mm(arra, arrb, &mouves, j);
-		j++;
+		if ((arrb->stack[i] < arra->stack[0] && arrb->stack[i] > arra->stack[arra->len - 1])
+		 	|| (arrb->stack[i] > arra->stack[0] && arrb->stack[i] < arra->stack[arra->len - 1]))
+		{
+			mouves.mouves_a.stack[i] = 0;
+		
+		}
+		else
+		{
+			ft_mouves_normal(arra, arrb, &mouves, i);
+			ft_mouves_mm(arra, arrb, &mouves, i);
+		}
+		i++;
 	}
 	ft_mouves_arrb(arrb, &mouves);
 	return (mouves);
@@ -382,26 +416,51 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 	while (arrb->len > 0)
 	{
 		mouves = ft_mouves(arra, arrb);
-		ft_min_mouves_a(&mouves);
-		if (mouves.mouves_b.stack[mouves.indec_nb] == 0 && mouves.mouves_a.stack[mouves.indec_nb] == 0)
-			ft_pa(arra,arrb);	
-		if (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0)
-			ft_arra_arrb_positive(arra, arrb, &mouves);	
-		if (mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0)
-			ft_arra_arrb_negative(arra, arrb, &mouves);		
-		if ((mouves.mouves_b.stack[mouves.indec_nb] < 0 && mouves.mouves_a.stack[mouves.indec_nb] > 0)
-			 || (mouves.mouves_b.stack[mouves.indec_nb] > 0 && mouves.mouves_a.stack[mouves.indec_nb] < 0))
-			ft_push_a_df(arra, arrb, &mouves);
-	// print moves arra / arrb
-	printf("----1\n");
+		printf("----2\n");
 	printf ("mouves arrb\n");
 	for(int i = 0; i < mouves.mouves_b.len; i++)
 		printf ("%d\n", mouves.mouves_b.stack[i]);
 	printf ("----mouves arra--\n");
 	for(int i = 0; i < mouves.mouves_a.len; i++)
 		printf ("%d\n", mouves.mouves_a.stack[i]);
-	printf("--------------\n");
-	// end
+	printf("----2\n");
+		ft_min_mouves_a(&mouves);
+		printf(".......indec......%d\n", mouves.indec_nb);
+		if (mouves.mouves_b.stack[mouves.indec_nb] == 0 && mouves.mouves_a.stack[mouves.indec_nb] == 0)
+		{
+			printf("indec == 0");
+			ft_pa(arra,arrb);
+		}
+				
+		else if ((mouves.mouves_b.stack[mouves.indec_nb] > 0 && mouves.mouves_a.stack[mouves.indec_nb] >= 0)
+			 || (mouves.mouves_b.stack[mouves.indec_nb] >= 0 && mouves.mouves_a.stack[mouves.indec_nb] > 0))
+			 {
+				 printf("arra && arrb positive\n");
+				 ft_arra_arrb_positive(arra, arrb, &mouves);	
+			 }
+			
+		else if ((mouves.mouves_b.stack[mouves.indec_nb] <= 0 && mouves.mouves_a.stack[mouves.indec_nb] < 0)
+			 || (mouves.mouves_b.stack[mouves.indec_nb] < 0 && mouves.mouves_a.stack[mouves.indec_nb] <= 0))
+			 {
+				 printf("arra && arrb negative\n");
+				 ft_arra_arrb_negative(arra, arrb, &mouves);	
+			 }
+				
+		else if ((mouves.mouves_b.stack[mouves.indec_nb] < 0 && mouves.mouves_a.stack[mouves.indec_nb] > 0)
+			 || (mouves.mouves_b.stack[mouves.indec_nb] > 0 && mouves.mouves_a.stack[mouves.indec_nb] < 0))
+			 {
+				 printf("arra && arrb df\n");
+				 ft_push_a_df(arra, arrb, &mouves);
+			 }
+			
+	printf("------staaaaaaaack A----\n");
+	for(int i = 0; i < arra->len; i++)
+		printf("%d\n", arra->stack[i]);
+	printf("------staaaaaaaaack B----\n");
+
+	for(int i = 0; i < arrb->len; i++)
+		printf("%d\n", arrb->stack[i]);
+	printf("----------\n"); 
 	}
 	ft_sort_arra(arra);
 }

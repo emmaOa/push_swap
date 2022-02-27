@@ -123,6 +123,13 @@ int main(int arc, char **arv)
 	sub.stack = malloc(count * sizeof(int));
 	sub = ft_sub_sq(&arra, &sub_sq, count);
 	ft_push_not_lis(&sub, &arra, &arrb);
+	printf("------arra11----\n");
+	for(i = 0; i < arra.len; i++)
+		printf("%d\n", arra.stack[i]);
+	printf("------arrb11----\n");
+
+	for(i = 0; i < arrb.len; i++)
+		printf("%d\n", arrb.stack[i]);
 	
 	mouves = ft_mouves(&arra, &arrb);
 	ft_push_arra(&arra, &arrb);
