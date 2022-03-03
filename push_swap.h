@@ -37,7 +37,6 @@ t_stack	ft_sub_sq(t_stack *arra, t_stack *sub_sq, int count);
 void	ft_push_not_lis(t_stack *lis, t_stack *arra, t_stack *arrb);
 actions	ft_mouves(t_stack *arra, t_stack *arrb);
 void	ft_push_arra(t_stack *arra, t_stack *arrb);
-void	ft_mouves_top(t_stack *arra, t_stack *arrb, actions *mouves, int j);
 void	ft_mouves_normal(t_stack *arra, t_stack *arrb, actions *mouves, int j);
 void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j);
 void    ft_mouves_arrb(t_stack *arrb, actions *mouves);

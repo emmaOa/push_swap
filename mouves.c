@@ -2,13 +2,6 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-void	 ft_mouves_top(t_stack *arra, t_stack *arrb, actions *mouves, int j)
-{
-	if ((arrb->stack[j] < arra->stack[0] && arrb->stack[j] > arra->stack[arra->len - 1])
-		 || (arrb->stack[j] > arra->stack[0] && arrb->stack[j] < arra->stack[arra->len - 1]))
-		mouves->mouves_a.stack[j] = 0;
-}
-
 void	ft_mouves_normal(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 {
 	int i;
@@ -22,7 +15,11 @@ void	ft_mouves_normal(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 			if ((i + 1) <= (arra->len / 2))
 				mouves->mouves_a.stack[j] = i + 1;
 			else if ((i + 1) > (arra->len / 2))
+			{
 				mouves->mouves_a.stack[j] = (arra->len - (i + 1)) * (-1);
+				printf("/-/-/-/-//-//-/\n");
+			}
+				
 		}
 		i++;
 	}
@@ -39,6 +36,7 @@ void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 	i = 0;
 	max = INT32_MIN;
 	min = INT32_MAX;
+
 	while (i < arra->len)
 	{
 		if (arra->stack[i] > max)
@@ -57,15 +55,15 @@ void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 	{
 		if (indc_max <= arra->len / 2)
 			mouves->mouves_a.stack[j] = indc_max + 1;
-		if (indc_max > arra->len / 2)
-			mouves->mouves_a.stack[j] = (arra->len - indc_max) * (-1);
+		else
+			mouves->mouves_a.stack[j] = (arra->len - (indc_max + 1)) * (-1);	
 	}
 	if (arrb->stack[j] < min)
 	{
 		if (indc_min <= arra->len / 2)
 			mouves->mouves_a.stack[j] = indc_min;
-		if (indc_min > arra->len / 2)
-			mouves->mouves_a.stack[j] = (arra->len - indc_min) * (-1);
+		else
+			mouves->mouves_a.stack[j] = (arra->len - indc_min) * (-1);	
 	}
 }
 
@@ -76,7 +74,7 @@ void    ft_mouves_arrb(t_stack *arrb, actions *mouves)
 
     i = 0;
     j = 0;
-     while (j < arrb->len / 2)
+     while (j < (arrb->len / 2) + 1)
     {
         mouves->mouves_b.stack[j] = i;
         j++;
@@ -84,13 +82,12 @@ void    ft_mouves_arrb(t_stack *arrb, actions *mouves)
     }
 	j = mouves->mouves_b.len - 1;
     i = -1;
-    while (j >= arrb->len / 2)
+    while (j > arrb->len / 2)
     {
         mouves->mouves_b.stack[j] = i;
         j--;
         i--;
-    }
-
+	}
 }
 
 void	ft_sort_arra(t_stack *arra)

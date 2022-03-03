@@ -94,7 +94,6 @@ int main(int arc, char **arv)
 	actions	mouves;
 	
 	i = 0;
-	
 	arra.len = arc - 1;
 	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
 	arrb.len = 0;
@@ -118,7 +117,7 @@ int main(int arc, char **arv)
 	lis.len = count;
 	lis.stack = malloc(count * sizeof(int));
 	lis = ft_indec(&len, &arra);
-	sub_sq = ft_indec_sub_sq(&lis, &len, count); 
+	sub_sq = ft_indec_sub_sq(&lis, &len, count);
 	sub.len = count;
 	sub.stack = malloc(count * sizeof(int));
 	sub = ft_sub_sq(&arra, &sub_sq, count);
@@ -131,7 +130,6 @@ int main(int arc, char **arv)
 	for(i = 0; i < arrb.len; i++)
 		printf("%d\n", arrb.stack[i]);
 	
-	mouves = ft_mouves(&arra, &arrb);
 	ft_push_arra(&arra, &arrb);
 	printf("------arra----\n");
 	for(i = 0; i < arra.len; i++)

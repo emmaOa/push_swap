@@ -57,6 +57,7 @@ void    ft_arra_arrb_equal_negative(t_stack *arra, t_stack *arrb, actions *mouve
 
 void    ft_arra_arrb_negative(t_stack *arra, t_stack *arrb, actions *mouves)
 {
+	
     	if (ft_abs(mouves->mouves_b.stack[mouves->indec_nb]) > ft_abs(mouves->mouves_a.stack[mouves->indec_nb]))
             ft_arrb_maximal_negative(arra, arrb, mouves);	
 		if (ft_abs(mouves->mouves_a.stack[mouves->indec_nb]) > ft_abs(mouves->mouves_b.stack[mouves->indec_nb]))

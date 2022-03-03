@@ -61,7 +61,6 @@ void    ft_arra_arrb_positive(t_stack *arra, t_stack *arrb, actions *mouves)
             ft_arrb_maximal_positive(arra, arrb, mouves);	
 		if (ft_abs(mouves->mouves_a.stack[mouves->indec_nb]) > ft_abs(mouves->mouves_b.stack[mouves->indec_nb]))
             ft_arra_maximal_positive(arra, arrb, mouves); 
-		if (mouves->mouves_a.stack[mouves->indec_nb] == mouves->mouves_b.stack[mouves->indec_nb] && mouves->mouves_a.stack[mouves->indec_nb] != 0)
+		if ((mouves->mouves_a.stack[mouves->indec_nb] == mouves->mouves_b.stack[mouves->indec_nb]) && (mouves->mouves_a.stack[mouves->indec_nb] != 0))
             ft_arra_arrb_equal_positive(arra, arrb, mouves);
-		ft_pa(arra,arrb);
 }
