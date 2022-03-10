@@ -46,7 +46,7 @@ void    ft_arra_arrb_equal_positive(t_stack *arra, t_stack *arrb, actions *mouve
 {
     int repet;
 
-    repet = (mouves->mouves_b.stack[mouves->indec_nb] * (-1));
+    repet = mouves->mouves_b.stack[mouves->indec_nb];
 			while (repet > 0)
 			{
 				ft_rr(arrb, arra);

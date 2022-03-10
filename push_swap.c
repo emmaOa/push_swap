@@ -105,13 +105,13 @@ int main(int arc, char **arv)
 	mouves.mouves_b.len = arrb.len;
 	mouves.mouves_b.stack = malloc (arrb.len * sizeof(int));
 
+	// printf("\n----------\n"); 
 	while (i < arc - 1)
 	{
 		arra.stack[i] = ft_atoi (arv[i + 1]);
 		i++;
 	}
 	ft_sort_arra(&arra);
-	
 	len = ft_found_lis(&arra);
 	count = ft_count_lis(&len);
 	sub_sq.len = count;
@@ -124,21 +124,21 @@ int main(int arc, char **arv)
 	sub.stack = malloc(count * sizeof(int));
 	sub = ft_sub_sq(&arra, &sub_sq, count);
 	ft_push_not_lis(&sub, &arra, &arrb);
-	printf("------arra11----\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d * ", arra.stack[i]);
-	printf("\n------arrb11----\n");
+	// printf("------arra11----\n");
+	// for(i = 0; i < arra.len; i++)
+	// 	printf("%d * ", arra.stack[i]);
+	// printf("\n------arrb11----\n");
 
-	for(i = 0; i < arrb.len; i++)
-		printf("%d * ", arrb.stack[i]);
+	// for(i = 0; i < arrb.len; i++)
+	// 	printf("%d * ", arrb.stack[i]);
 	
 	ft_push_arra(&arra, &arrb);
-	printf("\n------arra----\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d \n", arra.stack[i]);
-	printf("\n------arrb----\n");
+	// printf("\n------arra----\n");
+	// for(i = 0; i < arra.len; i++)
+	// 	printf("%d \n", arra.stack[i]);
+	// printf("\n------arrb----\n");
 
-	for(i = 0; i < arrb.len; i++)
-		printf("%d *", arrb.stack[i]);
-	printf("\n----------\n"); 
+	// for(i = 0; i < arrb.len; i++)
+	// 	printf("%d *", arrb.stack[i]);
+	// printf("\n----------\n"); 
 }
