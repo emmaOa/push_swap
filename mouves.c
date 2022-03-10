@@ -9,17 +9,19 @@ void	ft_mouves_normal(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 	i = 0;
 	while (i < arra->len - 1)
 	{
-		if ((arrb->stack[j] > arra->stack[i] && arrb->stack[j] < arra->stack[i + 1])
-			 || (arrb->stack[j] < arra->stack[i] && arrb->stack[j] > arra->stack[i + 1]))
+
+		if ((arrb->stack[j] < arra->stack[i] && arrb->stack[j] > arra->stack[i + 1]) 
+		|| (arrb->stack[j] > arra->stack[i] && arrb->stack[j] < arra->stack[i + 1]))
 		{
-			if ((i + 1) <= (arra->len / 2))
+			if (i + 1 <= (arra->len / 2))
+			{
 				mouves->mouves_a.stack[j] = i + 1;
-			else if ((i + 1) > (arra->len / 2))
+			}
+			else
 			{
 				mouves->mouves_a.stack[j] = (arra->len - (i + 1)) * (-1);
-				printf("/-/-/-/-//-//-/\n");
+				printf("\n j=%d mouves negative %d, i = %d, i + 1 = %d, len a = %d, len b = %d \n", j, mouves->mouves_a.stack[j], i, i + 1, arra->len, arrb->len);
 			}
-				
 		}
 		i++;
 	}
@@ -44,12 +46,12 @@ void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 			max = arra->stack[i];
 			indc_max = i;
 		}			
-		else if (arra->stack[i] < min)
+		if (arra->stack[i] < min)
 		{
 			min = arra->stack[i];
 			indc_min = i;
-		}	
-		i++;	
+		}
+		i++;
 	}
 	if (arrb->stack[j] > max)
 	{
@@ -57,6 +59,7 @@ void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 			mouves->mouves_a.stack[j] = indc_max + 1;
 		else
 			mouves->mouves_a.stack[j] = (arra->len - (indc_max + 1)) * (-1);	
+		printf("j=%d", j);
 	}
 	if (arrb->stack[j] < min)
 	{
@@ -64,6 +67,7 @@ void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 			mouves->mouves_a.stack[j] = indc_min;
 		else
 			mouves->mouves_a.stack[j] = (arra->len - indc_min) * (-1);	
+		printf("j=%d", j);
 	}
 }
 

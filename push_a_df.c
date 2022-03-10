@@ -27,7 +27,7 @@ void	ft_push_a_df(t_stack *arra, t_stack *arrb, actions *mouves)
 	if (mouves->mouves_b.stack[mouves->indec_nb] > 0)
 	{
 		repet = mouves->mouves_b.stack[mouves->indec_nb];
-		while (repet >= 0)
+		while (repet > 0)
 		{
 			call("rb\n", ft_rb, arrb);
 			repet--;
@@ -36,27 +36,29 @@ void	ft_push_a_df(t_stack *arra, t_stack *arrb, actions *mouves)
 	if (mouves->mouves_b.stack[mouves->indec_nb] < 0)
 	{
 		repet = ft_abs(mouves->mouves_b.stack[mouves->indec_nb]);
-		while (repet >= 0)
+		while (repet > 0)
 		{
-			call("rrb\n", ft_rb, arrb);
+			call("rrb\n", ft_rrb, arrb);
 			repet--;
 		}
 	}
 	if (mouves->mouves_a.stack[mouves->indec_nb] > 0)
 	{
 		repet = mouves->mouves_a.stack[mouves->indec_nb];
-		while (repet >= 0)
+		while (repet > 0)
 		{
-			call("ra\n", ft_rb, arrb);
+			call("ra\n", ft_ra, arra);
 			repet--;
 		}
 	}
 	if (mouves->mouves_a.stack[mouves->indec_nb] < 0)
 	{
+
 		repet = ft_abs(mouves->mouves_a.stack[mouves->indec_nb]);
-		while (repet >= 0)
+	
+		while (repet > 0)
 		{
-			call("rra\n", ft_rb, arrb);
+			call("rra\n", ft_rra, arra);
 			repet--;
 		}
 	}

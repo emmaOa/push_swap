@@ -110,6 +110,8 @@ int main(int arc, char **arv)
 		arra.stack[i] = ft_atoi (arv[i + 1]);
 		i++;
 	}
+	ft_sort_arra(&arra);
+	
 	len = ft_found_lis(&arra);
 	count = ft_count_lis(&len);
 	sub_sq.len = count;
@@ -124,19 +126,19 @@ int main(int arc, char **arv)
 	ft_push_not_lis(&sub, &arra, &arrb);
 	printf("------arra11----\n");
 	for(i = 0; i < arra.len; i++)
-		printf("%d\n", arra.stack[i]);
-	printf("------arrb11----\n");
+		printf("%d * ", arra.stack[i]);
+	printf("\n------arrb11----\n");
 
 	for(i = 0; i < arrb.len; i++)
-		printf("%d\n", arrb.stack[i]);
+		printf("%d * ", arrb.stack[i]);
 	
 	ft_push_arra(&arra, &arrb);
-	printf("------arra----\n");
+	printf("\n------arra----\n");
 	for(i = 0; i < arra.len; i++)
-		printf("%d\n", arra.stack[i]);
-	printf("------arrb----\n");
+		printf("%d \n", arra.stack[i]);
+	printf("\n------arrb----\n");
 
 	for(i = 0; i < arrb.len; i++)
-		printf("%d\n", arrb.stack[i]);
-	printf("----------\n"); 
+		printf("%d *", arrb.stack[i]);
+	printf("\n----------\n"); 
 }

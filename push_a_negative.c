@@ -8,18 +8,20 @@ void    ft_arra_maximal_negative(t_stack *arra, t_stack *arrb, actions *mouves)
     int repet;
 
     rest = ft_abs(mouves->mouves_a.stack[mouves->indec_nb]) - ft_abs(mouves->mouves_b.stack[mouves->indec_nb]);
-			repet = ft_abs(mouves->mouves_b.stack[mouves->indec_nb]);
-				while (repet > 0)
-			{
-				ft_rrr(arrb,arra);
-				repet--;
-			}
-			while (rest > 0)
-			{
-				call("rra\n", ft_rra, arra);
-				rest--;
-			}
-			ft_pa(arra,arrb);
+	repet = ft_abs(mouves->mouves_b.stack[mouves->indec_nb]);
+	// printf("rest: %d, repet : %d , mouves->indec_nb: %d, mouves->indec_nb: %d, val1: %d, val2: %d\n", rest, repet, mouves->indec_nb, mouves->indec_nb, mouves->mouves_a.stack[mouves->indec_nb], mouves->mouves_b.stack[mouves->indec_nb]);
+	// exit(0);
+	while (repet > 0)
+	{
+		ft_rrr(arrb,arra);
+			repet--;
+	}
+	while (rest > 0)
+	{
+		call("rra\n", ft_rra, arra);
+		rest--;
+	}
+	ft_pa(arra,arrb);
 }
 
 void    ft_arrb_maximal_negative(t_stack *arra, t_stack *arrb, actions *mouves)
@@ -46,7 +48,7 @@ void    ft_arra_arrb_equal_negative(t_stack *arra, t_stack *arrb, actions *mouve
 {
     int repet;
 
-    repet = (mouves->mouves_b.stack[mouves->indec_nb] * (-1));
+    repet = ft_abs(mouves->mouves_b.stack[mouves->indec_nb]);
 			while (repet > 0)
 			{
 				ft_rrr(arrb,arra);
