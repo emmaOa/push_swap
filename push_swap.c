@@ -133,12 +133,12 @@ int main(int arc, char **arv)
 	// 	printf("%d * ", arrb.stack[i]);
 	
 	ft_push_arra(&arra, &arrb);
-	// printf("\n------arra----\n");
-	// for(i = 0; i < arra.len; i++)
-	// 	printf("%d \n", arra.stack[i]);
-	// printf("\n------arrb----\n");
+	printf("\n------arra----\n");
+	for(i = 0; i < arra.len; i++)
+		printf("%d \n", arra.stack[i]);
+	printf("\n------arrb----\n");
 
-	// for(i = 0; i < arrb.len; i++)
-	// 	printf("%d *", arrb.stack[i]);
-	// printf("\n----------\n"); 
+	for(i = 0; i < arrb.len; i++)
+		printf("%d *", arrb.stack[i]);
+	printf("\n----------\n"); 
 }
