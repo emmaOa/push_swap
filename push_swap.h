@@ -14,6 +14,13 @@ typedef struct actions
 	t_stack	mouves_b;
 	int	indec_nb;
 }	actions;
+
+typedef struct sign
+{
+	int nb;
+	char *not_nb;
+}	sign;
+ 
 int		ft_atoi(const char *str);
 void	ft_sa(t_stack *arra);
 void	ft_swap(int *a, int *b);
@@ -52,5 +59,6 @@ void	ft_push_a_df(t_stack *arra, t_stack *arrb, actions *mouves);
 void	ft_min_mouves_a(actions *mouves);
 void	ft_sort_arra(t_stack *arra);
 int		ft_abs(int n);
+int		ft_isdigit(int a);
 
 #endif

@@ -3,87 +3,46 @@
 #include "libft.h"
 #include "push_swap.h"
 
-char *sort_a1(t_stack *arra)
+int	ft_isdigit(int a)
 {
-	if (arra->stack[0] > arra->stack[1] && arra->stack[0] < arra->stack[2])
-		call("sa\n", ft_sa, arra);
-	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
-	{
-		call("sa\n", ft_sa, arra);
-		call("rra\n", ft_rra, arra);
-	}
-	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] < arra->stack[2])
-		call("ra\n", ft_ra, arra);
-	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] < arra->stack[2] && arra->stack[1] > arra->stack[2])
-	{
-		call("sa\n", ft_sa, arra);
-		call("ra\n", ft_ra, arra);
-	}
-	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
-		call("rra\n", ft_rra, arra);	
-	return ("error\n");
+	if (a >= '0' && a <= '9')
+		return (1);
+	return (0);
 }
 
-void	sort_a2(t_stack *arra, t_stack *arrb)
+
+int ft_double(t_stack *lin, int nb)
 {
 	int i;
 
 	i = 0;
-	while (i < arra->len - 1)
+	while (i < lin->len)
 	{
-		if(arra->stack[0] < 3)
-		{
-			ft_pb(arra,arrb);
-			i++;
-		}
-		else
-		{
-			call("ra\n", ft_ra, arra);
-			i++;
-		}
+		if (lin->stack[i] == nb)
+			return (1);
+		i++;
 	}
+	return (0);
+}
+
+sign ft_sign(char *str)
+{
+	sign ret;
+	int i;
+	char sign;
 
 	i = 0;
-	while (i < arra->len - 1)
-	{
-		if(arra->stack[0] < 4)
-		{
-			ft_pb(arra,arrb);
-			i++;
-		}
-		else
-		{
-			call("ra\n", ft_ra, arra);
-			i++;
-		}
-	}
-	if (arra->stack[0] > arra->stack[1])
-		call("sa\n", ft_sa, arra);
-
-	i = 0;
-	while (i < arrb->len - 1)
-	{
-		if(arrb->stack[0] > 2)
-		{
-			ft_pa(arra,arrb);
-			i++;
-		}
-		else
-		{
-			call("rb\n", ft_rb, arrb);
-			i++;
-		}
-	}
-
-	if (arrb->stack[0] < arrb->stack[1])
-		call("sb\n", ft_sb, arrb);
-	ft_pa(arra, arrb);
-	ft_pa(arra, arrb);
+	sign = str[i];
+	ret.nb = ft_atoi(str);
+	if ((ret.nb < 0 && sign != '-') || (ret.nb > 0 && sign == '-'))
+		ret.not_nb = "error\n";
+	return (ret);
 }
 
 int main(int arc, char **arv)
 {
 	int		i;
+	int		j;
 	int count;
 	t_stack	len;
 	t_stack lis;
@@ -92,6 +51,7 @@ int main(int arc, char **arv)
 	t_stack	arrb;
 	t_stack sub_sq;
 	actions	mouves;
+	sign sign_nb;
 	
 	i = 0;
 	arra.len = arc - 1;
@@ -105,10 +65,36 @@ int main(int arc, char **arv)
 	mouves.mouves_b.len = arrb.len;
 	mouves.mouves_b.stack = malloc (arrb.len * sizeof(int));
 
-	// printf("\n----------\n"); 
+	if (arc == 1)
+	{
+		write (2, "error\n", 6);
+		exit (0);		
+	}
 	while (i < arc - 1)
 	{
-		arra.stack[i] = ft_atoi (arv[i + 1]);
+		j = 0;
+		while (arv[i + 1][j])
+		{
+			if (ft_isdigit(arv[i + 1][j]) == 0)
+			{
+				write (2, "error\n", 6);
+				exit (0);
+			}
+			j++;
+		}
+		
+		sign_nb = ft_sign(arv[i + 1]);
+		if (sign_nb.not_nb != '\0')
+		{
+			write (2, "error\n", 6);
+			exit (0);
+		}
+		if (ft_double(&arra, sign_nb.nb) ==  1)
+		{
+			write (2, "error\n", 6);
+			exit (0);	
+		}
+		arra.stack[i] = sign_nb.nb;
 		i++;
 	}
 	ft_sort_arra(&arra);
@@ -124,21 +110,13 @@ int main(int arc, char **arv)
 	sub.stack = malloc(count * sizeof(int));
 	sub = ft_sub_sq(&arra, &sub_sq, count);
 	ft_push_not_lis(&sub, &arra, &arrb);
-	// printf("------arra11----\n");
+	ft_push_arra(&arra, &arrb);
+	// printf("\n------arra----\n");
 	// for(i = 0; i < arra.len; i++)
-	// 	printf("%d * ", arra.stack[i]);
-	// printf("\n------arrb11----\n");
+	// 	printf("%d \n", arra.stack[i]);
+	// printf("\n------arrb----\n");
 
 	// for(i = 0; i < arrb.len; i++)
-	// 	printf("%d * ", arrb.stack[i]);
-	
-	ft_push_arra(&arra, &arrb);
-	printf("\n------arra----\n");
-	for(i = 0; i < arra.len; i++)
-		printf("%d \n", arra.stack[i]);
-	printf("\n------arrb----\n");
-
-	for(i = 0; i < arrb.len; i++)
-		printf("%d *", arrb.stack[i]);
-	printf("\n----------\n"); 
+	// 	printf("%d *", arrb.stack[i]);
+	// printf("\n----------\n"); 
 }
