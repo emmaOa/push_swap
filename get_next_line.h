@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 05:08:24 by iouazzan          #+#    #+#             */
-/*   Updated: 2021/12/07 05:13:11 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/13 18:34:19 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+
+# define BUFFER_SIZE  10
 
 char	*get_next_line(int fd);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

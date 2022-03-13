@@ -1,5 +1,6 @@
 #include "get_next_line.h"
 #include "checker.h"
+#include <stdio.h>
 
 void ft_swap_ch(int *a, int *b)
 {
@@ -10,23 +11,23 @@ void ft_swap_ch(int *a, int *b)
 	*b = tmp;
 }
 
-void ft_sa_ch(t_stack *arra)
-{	
+void ft_sa_ch(t_stack_checker *arra)
+{
 	ft_swap_ch(&arra->stack[1], &arra->stack[0]);
 }
 
-void ft_sb_ch(t_stack *arrb)
+void ft_sb_ch(t_stack_checker *arrb)
 {	
-	ft_swap(&arrb->stack[1], &arrb->stack[0]);
+	ft_swap_ch(&arrb->stack[1], &arrb->stack[0]);
 }
 
-void ft_ss_ch(t_stack *arrb, t_stack *arra)
+void ft_ss_ch(t_stack_checker *arrb, t_stack_checker *arra)
 {	
 	ft_sa_ch(arra);
 	ft_sb_ch(arrb);
 }
 
-void ft_pa_ch(t_stack *arra, t_stack *arrb)
+void ft_pa_ch(t_stack_checker *arra, t_stack_checker *arrb)
 {
 	int i;
 	int tmp;
@@ -49,7 +50,7 @@ void ft_pa_ch(t_stack *arra, t_stack *arrb)
 	arrb->len--;
 }
 
-void ft_pb_ch(t_stack *arra, t_stack *arrb)
+void ft_pb_ch(t_stack_checker *arra, t_stack_checker *arrb)
 {
 	int i;
 	int tmp;
@@ -72,7 +73,7 @@ void ft_pb_ch(t_stack *arra, t_stack *arrb)
 	arra->len--;
 }
 
-void ft_ra_ch(t_stack *arra)
+void ft_ra_ch(t_stack_checker *arra)
 {
 	int	i;
 	int	tmp;
@@ -87,7 +88,7 @@ void ft_ra_ch(t_stack *arra)
 	arra->stack[arra->len - 1] = tmp;
 }
 
-void ft_rb_ch(t_stack *arrb)
+void ft_rb_ch(t_stack_checker *arrb)
 {
 	int	i;
 	int	tmp;
@@ -102,13 +103,13 @@ void ft_rb_ch(t_stack *arrb)
 	arrb->stack[arrb->len - 1] = tmp;
 }
 
-void ft_rr_ch(t_stack *arrb, t_stack *arra)
+void ft_rr_ch(t_stack_checker *arrb, t_stack_checker *arra)
 {
 	ft_rb_ch(arrb);
 	ft_ra_ch(arra);
 }
 
-void ft_rra_ch(t_stack *arra)
+void ft_rra_ch(t_stack_checker *arra)
 {
 	int	i;
 	int	tmp;
@@ -123,7 +124,7 @@ void ft_rra_ch(t_stack *arra)
 	arra->stack[0] = tmp;
 }
 
-void ft_rrb_ch(t_stack *arrb)
+void ft_rrb_ch(t_stack_checker *arrb)
 {
 			int	i;
 	int	tmp;
@@ -138,7 +139,7 @@ void ft_rrb_ch(t_stack *arrb)
 	arrb->stack[0] = tmp;
 }
 
-void ft_rrr_ch(t_stack *arrb, t_stack *arra)
+void ft_rrr_ch(t_stack_checker *arrb, t_stack_checker *arra)
 {
 	ft_rrb_ch(arrb);
 	ft_rra_ch(arra);

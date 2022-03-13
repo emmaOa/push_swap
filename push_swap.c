@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "libft.h"
 #include "push_swap.h"
 
 char *sort_a1(t_stack *arra)
@@ -109,7 +108,7 @@ int main(int arc, char **arv)
 		j = 0;
 		while (arv[i + 1][j])
 		{
-			if (ft_isdigit(arv[i + 1][j]) == 0)
+			if (ft_isdigit(arv[i + 1][j]) == 0 && arv[i + 1][j] != '-')
 			{
 				write (2, "error\n", 6);
 				exit (0);
@@ -126,7 +125,7 @@ int main(int arc, char **arv)
 		if (ft_double(&arra, sign_nb.nb) ==  1)
 		{
 			write (2, "error\n", 6);
-			exit (0);	
+			exit (0);
 		}
 		arra.stack[i] = sign_nb.nb;
 		i++;
@@ -158,6 +157,6 @@ int main(int arc, char **arv)
 
 	// for(i = 0; i < arrb.len; i++)
 	// 	printf("%d *", arrb.stack[i]);
-	// printf("\n----------\n"); 
-//	system("leaks push_swap");
+	printf("\n----------\n"); 
+	system("leaks push_swap");
 }
