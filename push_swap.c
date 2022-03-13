@@ -3,6 +3,27 @@
 #include "libft.h"
 #include "push_swap.h"
 
+char *sort_a1(t_stack *arra)
+{
+	if (arra->stack[0] > arra->stack[1] && arra->stack[0] < arra->stack[2])
+		call("sa\n", ft_sa, arra);
+	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
+	{
+		call("sa\n", ft_sa, arra);
+		call("rra\n", ft_rra, arra);
+	}
+	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] < arra->stack[2])
+		call("ra\n", ft_ra, arra);
+	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] < arra->stack[2] && arra->stack[1] > arra->stack[2])
+	{
+		call("sa\n", ft_sa, arra);
+		call("ra\n", ft_ra, arra);
+	}
+	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
+		call("rra\n", ft_rra, arra);	
+	return ("error\n");
+}
+
 int	ft_isdigit(int a)
 {
 	if (a >= '0' && a <= '9')
@@ -34,8 +55,9 @@ sign ft_sign(char *str)
 	i = 0;
 	sign = str[i];
 	ret.nb = ft_atoi(str);
+	ret.nb2 = 0;
 	if ((ret.nb < 0 && sign != '-') || (ret.nb > 0 && sign == '-'))
-		ret.not_nb = "error\n";
+		ret.nb2 = 1;
 	return (ret);
 }
 
@@ -56,14 +78,26 @@ int main(int arc, char **arv)
 	i = 0;
 	arra.len = arc - 1;
 	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
+	if (!arra.stack)
+	{
+		free(&arra);
+		return 0;
+	}
 	arrb.len = 0;
 	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
+	if (!arrb.stack)
+	{
+		free(&arrb);
+		return 0;
+	}
 	len.len = arra.len;
 	len.stack = malloc(arra.len * sizeof(int));
 	mouves.mouves_a.len = arrb.len;
 	mouves.mouves_a.stack = malloc (arrb.len * sizeof(int));
 	mouves.mouves_b.len = arrb.len;
 	mouves.mouves_b.stack = malloc (arrb.len * sizeof(int));
+
+
 
 	if (arc == 1)
 	{
@@ -84,7 +118,7 @@ int main(int arc, char **arv)
 		}
 		
 		sign_nb = ft_sign(arv[i + 1]);
-		if (sign_nb.not_nb != '\0')
+		if (sign_nb.nb2 == 1)
 		{
 			write (2, "error\n", 6);
 			exit (0);
@@ -96,6 +130,11 @@ int main(int arc, char **arv)
 		}
 		arra.stack[i] = sign_nb.nb;
 		i++;
+	}
+	if (arc == 4)
+	{
+		sort_a1(&arra);
+		exit(0);
 	}
 	ft_sort_arra(&arra);
 	len = ft_found_lis(&arra);
@@ -110,6 +149,7 @@ int main(int arc, char **arv)
 	sub.stack = malloc(count * sizeof(int));
 	sub = ft_sub_sq(&arra, &sub_sq, count);
 	ft_push_not_lis(&sub, &arra, &arrb);
+	
 	ft_push_arra(&arra, &arrb);
 	// printf("\n------arra----\n");
 	// for(i = 0; i < arra.len; i++)
@@ -119,4 +159,5 @@ int main(int arc, char **arv)
 	// for(i = 0; i < arrb.len; i++)
 	// 	printf("%d *", arrb.stack[i]);
 	// printf("\n----------\n"); 
+//	system("leaks push_swap");
 }

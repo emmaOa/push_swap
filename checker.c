@@ -24,6 +24,13 @@ int	ft_strncmp(const char *d, const char *s, size_t n)
 	return (0);
 }
 
+int	ft_isdigit(int a)
+{
+	if (a >= '0' && a <= '9')
+		return (1);
+	return (0);
+}
+
 int ft_double(t_stack *lin, int nb)
 {
 	int i;

@@ -18,7 +18,7 @@ typedef struct actions
 typedef struct sign
 {
 	int nb;
-	char *not_nb;
+	int nb2;
 }	sign;
  
 int		ft_atoi(const char *str);
