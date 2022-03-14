@@ -6,8 +6,7 @@ void	ft_mouves_normal(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 {
 	int i;
 
-	i = 0;
-	
+	i = 0;	
 	while (i < arra->len - 1)
 	{
 		if (arrb->stack[j] > arra->stack[i] && arrb->stack[j] < arra->stack[i + 1])
@@ -32,7 +31,6 @@ void	ft_mouves_mm(t_stack *arra, t_stack *arrb, actions *mouves, int j)
 	i = 0;
 	max = INT32_MIN;
 	min = INT32_MAX;
-
 	while (i < arra->len)
 	{
 		if (arra->stack[i] > max)

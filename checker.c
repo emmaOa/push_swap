@@ -67,12 +67,12 @@ int	ft_isdigit_chacker(int a)
 	return (0);
 }
 
-int ft_double_checker(t_stack_checker *lin, int nb)
+int ft_double_checker(t_stack_checker *lin, int nb, int ac)
 {
 	int i;
 
 	i = 0;
-	while (i < lin->len)
+	while (i < ac + 1)
 	{
 		if (lin->stack[i] == nb)
 			return (1);
@@ -120,11 +120,9 @@ void	ft_instraction(char *out_get, t_stack_checker *arra, t_stack_checker *arrb)
 		ft_rrb_ch(arrb);
 	else if (ft_strncmp(out_get, "rrr\n", 4) == 0)
 		ft_rrr_ch(arra, arrb);
-	else if (ft_strncmp(out_get, "error\n", 6) == 0)
-		exit (0);
 	else
 	{
-		write (2, "error\n", 6);
+		write (2, "error1\n", 6);
 		exit (0);
 	}
 }
@@ -159,7 +157,7 @@ int main(int arc, char **arv)
 	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
 	if (arc == 1)
 	{
-		write (2, "error\n", 6);
+		write (2, "error2\n", 6);
 		exit (0);		
 	}
 	while (i < arc - 1)
@@ -169,21 +167,20 @@ int main(int arc, char **arv)
 		{
 			if (ft_isdigit_chacker(arv[i + 1][j]) == 0 && arv[i + 1][j] != '-')
 			{
-				write (2, "error\n", 6);
+				write (2, "error3\n", 6);
 				exit (0);
 			}
 			j++;
-		}
-		
+		}	
 		sign_nb = ft_sign_checker(arv[i + 1]);
 		if (sign_nb.nb2 == 1)
 		{
-			write (2, "error9\n", 6);
+			write (2, "error4\n", 6);
 			exit (0);
 		}
-		if (ft_double_checker(&arra, sign_nb.nb) ==  1)
+		if (ft_double_checker(&arra, sign_nb.nb, i) ==  1)
 		{
-			write (2, "error\n", 6);
+			write (2, "error5\n", 6);
 			exit (0);	
 		}
 		arra.stack[i] = sign_nb.nb;
@@ -193,15 +190,11 @@ int main(int arc, char **arv)
 	while (instraction != '\0')
 	{
 		ft_instraction(instraction, &arra, &arrb);
+		free(instraction);
 		instraction = get_next_line(0);
 	}
 	if (ft_checker(&arra) == 0 && arrb.len == 0)
 		write(1, "ok\n", 3);
 	else
 		write(1, "ko\n", 3);
-	
-	// printf("\n------arra----\n");
-	// for(i = 0; i < arra.len; i++)
-	// printf("%d \n", arra.stack[i]);
-
 }

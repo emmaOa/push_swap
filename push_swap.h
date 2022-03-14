@@ -60,5 +60,6 @@ void	ft_min_mouves_a(actions *mouves);
 void	ft_sort_arra(t_stack *arra);
 int		ft_abs(int n);
 int		ft_isdigit(int a);
+int 	ft_double(t_stack *lin, int nb, int ac);
 
 #endif

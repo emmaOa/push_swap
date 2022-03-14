@@ -29,5 +29,5 @@ void ft_rrb_ch(t_stack_checker *arrb);
 void ft_rrr_ch(t_stack_checker *arrb, t_stack_checker *arra);
 int	ft_atoi_checker(const char *str);
 int	ft_checker(t_stack_checker *arra);
-//static	int	check_checker(size_t sign);
+int ft_double_checker(t_stack_checker *lin, int nb, int ac);
 #endif
