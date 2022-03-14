@@ -1,5 +1,5 @@
-MANDATORY= push_swap.c push_a_negative.c push_a_positive.c mouves.c func_ut.c push_a_df.c instraction_b.c instraction_a.c
-BONUS= checker.c func_checker.c get_next_line.c get_next_line_utils.c
+MANDATORY= push_swap.c push_a_negative.c push_a_positive.c mouves.c func_ut.c push_a_df.c instraction_b.c instraction_a.c subsequence.c push.c instraction_else.c
+BONUS= checker.c func_checker.c get_next_line.c get_next_line_utils.c instraction_b_checker.c instraction_a_checker.c instraction_else_checker.c
 
 
 

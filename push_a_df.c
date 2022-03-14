@@ -1,28 +1,40 @@
-#include "libft.h"
-#include "push_swap.h"
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_a_df.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/14 22:46:22 by iouazzan          #+#    #+#             */
+/*   Updated: 2022/03/14 22:47:45 by iouazzan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	ft_min_mouves_a(actions *mouves)
+#include "push_swap.h"
+
+void	ft_min_mouves_a(t_actions *mouves)
 {
-	int i;
-	int min;
+	int	i;
+	int	min;
 
 	i = 0;
 	min = 2147483647;
 	while (i < mouves->mouves_a.len)
 	{
-		if (ft_abs(mouves->mouves_a.stack[i]) + ft_abs(mouves->mouves_b.stack[i]) < min)
+		if (ft_abs(mouves->mouves_a.stack[i])
+			+ ft_abs(mouves->mouves_b.stack[i]) < min)
 		{	
-			min = ft_abs(mouves->mouves_a.stack[i]) + ft_abs(mouves->mouves_b.stack[i]);
+			min = ft_abs(mouves->mouves_a.stack[i])
+				+ ft_abs(mouves->mouves_b.stack[i]);
 			mouves->indec_nb = i;
 		}
 		i++;
 	}
 }
 
-void	ft_push_a_df(t_stack *arra, t_stack *arrb, actions *mouves)
+void	ft_push_a_df(t_stack *arra, t_stack *arrb, t_actions *mouves)
 {
-	int repet;
+	int	repet;
 
 	if (mouves->mouves_b.stack[mouves->indec_nb] > 0)
 	{
@@ -53,14 +65,12 @@ void	ft_push_a_df(t_stack *arra, t_stack *arrb, actions *mouves)
 	}
 	if (mouves->mouves_a.stack[mouves->indec_nb] < 0)
 	{
-
 		repet = ft_abs(mouves->mouves_a.stack[mouves->indec_nb]);
-	
 		while (repet > 0)
 		{
 			call("rra\n", ft_rra, arra);
 			repet--;
 		}
 	}
-	ft_pa(arra,arrb);
+	ft_pa(arra, arrb);
 }

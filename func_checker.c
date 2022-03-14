@@ -1,146 +1,103 @@
-#include "get_next_line.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   func_checker.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/14 22:03:01 by iouazzan          #+#    #+#             */
+/*   Updated: 2022/03/14 23:24:43 by iouazzan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
-#include <stdio.h>
 
-void ft_swap_ch(int *a, int *b)
+static	int	check_checker(size_t sign)
 {
-	int tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	if (sign == 1)
+		return (-1);
+	return (0);
 }
 
-void ft_sa_ch(t_stack_checker *arra)
+int	ft_atoi_checker(const char *str)
 {
-	ft_swap_ch(&arra->stack[1], &arra->stack[0]);
-}
-
-void ft_sb_ch(t_stack_checker *arrb)
-{	
-	ft_swap_ch(&arrb->stack[1], &arrb->stack[0]);
-}
-
-void ft_ss_ch(t_stack_checker *arrb, t_stack_checker *arra)
-{	
-	ft_sa_ch(arra);
-	ft_sb_ch(arrb);
-}
-
-void ft_pa_ch(t_stack_checker *arra, t_stack_checker *arrb)
-{
-	int i;
-	int tmp;
+	size_t				i;
+	size_t				k;
+	int					sign;
+	unsigned long long	n;
 
 	i = 0;
-	arra->len++;
-	tmp = arra->len - 1;
-	while (tmp > 0)
+	n = 0;
+	sign = 1;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-')
 	{
-		arra->stack[tmp] = arra->stack[tmp - 1];
-		tmp--;
-	}
-	arra->stack[0] = arrb->stack[0];
-	i = 0;
-	while (i < arrb->len)
-	{
-		arrb->stack[i] = arrb->stack[i + 1];
+		sign *= -1;
 		i++;
 	}
-	arrb->len--;
+	else if (str[i] == '+')
+		i++;
+	k = i;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+		n = n * 10 + str[i++] - 48;
+	k = i - k;
+	if (k > 19 || n > 9223372036854775807)
+		return (check_checker(sign));
+	n = n * sign;
+	return ((int)n);
 }
 
-void ft_pb_ch(t_stack_checker *arra, t_stack_checker *arrb)
+int	ft_strncmp(const char *d, const char *s, size_t n)
 {
-	int i;
-	int tmp;
+	size_t			i;
+	unsigned char	*dst;
+	unsigned char	*src;
 
 	i = 0;
-	arrb->len++;
-	tmp = arrb->len;
-	while (tmp > 0)
+	dst = (unsigned char *)d;
+	src = (unsigned char *)s;
+	if (n == 0)
+		return (0);
+	while ((i < n) && ((dst[i] != '\0') || (src[i] != '\0')))
 	{
-		arrb->stack[tmp] = arrb->stack[tmp - 1];
-		tmp--;
-	}
-	arrb->stack[0] = arra->stack[0];
-	i = 0;
-	while (i < arra->len - 1)
-	{
-		arra->stack[i] = arra->stack[i + 1];
+		if (dst[i] != src[i])
+		{
+			return (dst[i] - src[i]);
+		}
 		i++;
 	}
-	arra->len--;
+	return (0);
 }
 
-void ft_ra_ch(t_stack_checker *arra)
+void	ft_instraction(char *out_get, t_stack_checker *arra,
+	t_stack_checker *arrb)
 {
-	int	i;
-	int	tmp;
-
-	i = 0;
-	tmp = arra->stack[i];
-	while (i < arra->len - 1)
+	if (ft_strncmp(out_get, "sa\n", 3) == 0)
+		ft_sa_ch(arra);
+	else if (ft_strncmp(out_get, "sb\n", 3) == 0)
+		ft_sb_ch(arrb);
+	else if (ft_strncmp(out_get, "ss\n", 3) == 0)
+		ft_ss_ch(arra, arrb);
+	else if (ft_strncmp(out_get, "pa\n", 3) == 0)
+		ft_pa_ch(arra, arrb);
+	else if (ft_strncmp(out_get, "pb\n", 3) == 0)
+		ft_pb_ch(arra, arrb);
+	else if (ft_strncmp(out_get, "ra\n", 3) == 0)
+		ft_ra_ch(arra);
+	else if (ft_strncmp(out_get, "rb\n", 3) == 0)
+		ft_rb_ch(arrb);
+	else if (ft_strncmp(out_get, "rr\n", 3) == 0)
+		ft_rr_ch(arra, arrb);
+	else if (ft_strncmp(out_get, "rra\n", 4) == 0)
+		ft_rra_ch(arra);
+	else if (ft_strncmp(out_get, "rrb\n", 4) == 0)
+		ft_rrb_ch(arrb);
+	else if (ft_strncmp(out_get, "rrr\n", 4) == 0)
+		ft_rrr_ch(arra, arrb);
+	else
 	{
-		arra->stack[i] = arra->stack[i + 1];
-		i++;
+		write (2, "error\n", 6);
+		exit (0);
 	}
-	arra->stack[arra->len - 1] = tmp;
-}
-
-void ft_rb_ch(t_stack_checker *arrb)
-{
-	int	i;
-	int	tmp;
-
-	i = 0;
-	tmp = arrb->stack[i];
-	while (i < arrb->len)
-	{
-		arrb->stack[i] = arrb->stack[i + 1];
-		i++;
-	}
-	arrb->stack[arrb->len - 1] = tmp;
-}
-
-void ft_rr_ch(t_stack_checker *arrb, t_stack_checker *arra)
-{
-	ft_rb_ch(arrb);
-	ft_ra_ch(arra);
-}
-
-void ft_rra_ch(t_stack_checker *arra)
-{
-	int	i;
-	int	tmp;
-
-	i = arra->len - 1;
-	tmp = arra->stack[i];
-	while (i > 0)
-	{
-		arra->stack[i] = arra->stack[i - 1];
-		i--;
-	}
-	arra->stack[0] = tmp;
-}
-
-void ft_rrb_ch(t_stack_checker *arrb)
-{
-			int	i;
-	int	tmp;
-
-	i = arrb->len - 1;
-	tmp = arrb->stack[i];
-	while (i > 0)
-	{
-		arrb->stack[i] = arrb->stack[i - 1];
-		i--;
-	}
-	arrb->stack[0] = tmp;
-}
-
-void ft_rrr_ch(t_stack_checker *arrb, t_stack_checker *arra)
-{
-	ft_rrb_ch(arrb);
-	ft_rra_ch(arra);
 }

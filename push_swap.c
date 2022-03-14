@@ -1,25 +1,41 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/14 21:35:23 by iouazzan          #+#    #+#             */
+/*   Updated: 2022/03/14 22:37:57 by iouazzan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "push_swap.h"
 
-char *sort_a1(t_stack *arra)
+char	*sort_a1(t_stack *arra)
 {
-	if (arra->stack[0] > arra->stack[1] && arra->stack[0] < arra->stack[2])
+	if (arra->stack[0] > arra->stack[1]
+		&& arra->stack[0] < arra->stack[2])
 		call("sa\n", ft_sa, arra);
-	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
+	else if (arra->stack[0] > arra->stack[1]
+		&& arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
 	{
 		call("sa\n", ft_sa, arra);
 		call("rra\n", ft_rra, arra);
 	}
-	else if (arra->stack[0] > arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] < arra->stack[2])
+	else if (arra->stack[0] > arra->stack[1]
+		&& arra->stack[0] > arra->stack[2] && arra->stack[1] < arra->stack[2])
 		call("ra\n", ft_ra, arra);
-	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] < arra->stack[2] && arra->stack[1] > arra->stack[2])
+	else if (arra->stack[0] < arra->stack[1]
+		&& arra->stack[0] < arra->stack[2] && arra->stack[1] > arra->stack[2])
 	{
 		call("sa\n", ft_sa, arra);
 		call("ra\n", ft_ra, arra);
 	}
-	else if(arra->stack[0] < arra->stack[1] && arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
-		call("rra\n", ft_rra, arra);	
+	else if (arra->stack[0] < arra->stack[1]
+		&& arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
+		call("rra\n", ft_rra, arra);
 	return ("error\n");
 }
 
@@ -30,9 +46,9 @@ int	ft_isdigit(int a)
 	return (0);
 }
 
-int ft_double(t_stack *lin, int nb, int ac)
+int	ft_double(t_stack *lin, int nb, int ac)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < ac + 1)
@@ -44,11 +60,11 @@ int ft_double(t_stack *lin, int nb, int ac)
 	return (0);
 }
 
-sign ft_sign(char *str)
+t_sign	ft_sign(char *str)
 {
-	sign ret;
-	int i;
-	char sign;
+	int		i;
+	char	sign;
+	t_sign	ret;
 
 	i = 0;
 	sign = str[i];
@@ -59,19 +75,19 @@ sign ft_sign(char *str)
 	return (ret);
 }
 
-int main(int arc, char **arv)
+int	main(int arc, char **arv)
 {
 	int		i;
 	int		j;
-	int 	count;
+	int		count;
 	t_stack	len;
-	t_stack lis;
-	t_stack sub;
+	t_stack	lis;
+	t_stack	sub;
 	t_stack	arra;
 	t_stack	arrb;
-	t_stack sub_sq;
-	sign sign_nb;
-	
+	t_stack	sub_sq;
+	t_sign	sign_nb;
+
 	i = 0;
 	arra.len = arc - 1;
 	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
@@ -81,7 +97,7 @@ int main(int arc, char **arv)
 	if (arc == 1)
 	{
 		write (2, "error\n", 6);
-		exit (0);		
+		exit (0);
 	}
 	while (i < arc - 1)
 	{
@@ -95,14 +111,13 @@ int main(int arc, char **arv)
 			}
 			j++;
 		}
-		
 		sign_nb = ft_sign(arv[i + 1]);
 		if (sign_nb.nb2 == 1)
 		{
 			write (2, "error\n", 6);
 			exit (0);
 		}
-		if (ft_double(&arra, sign_nb.nb, i) ==  1)
+		if (ft_double(&arra, sign_nb.nb, i) == 1)
 		{
 			write (2, "error\n", 6);
 			exit (0);
@@ -120,10 +135,10 @@ int main(int arc, char **arv)
 	count = ft_count_lis(&len);
 	sub_sq.len = count;
 	lis.len = count;
-	lis = ft_indec(&len, &arra);	
+	lis = ft_indec(&len, &arra);
 	sub_sq = ft_indec_sub_sq(&lis, &len, count);
 	sub.len = count;
-	sub = ft_sub_sq(&arra, &sub_sq, count);	
+	sub = ft_sub_sq(&arra, &sub_sq, count);
 	ft_push_not_lis(&sub, &arra, &arrb);
-	ft_push_arra(&arra, &arrb);	
+	ft_push_arra(&arra, &arrb);
 }
