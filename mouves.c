@@ -6,11 +6,10 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:56:16 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/15 16:49:52 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:26:21 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "push_swap.h"
 
 void	ft_mouves_normal(t_stack *arra, t_stack *arrb, t_actions *mouves, int j)

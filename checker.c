@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:42:38 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 10:35:26 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 13:43:18 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int arc, char **arv)
 	arrb.len = 0;
 	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
 	if (arc == 1)
-		ft_error_checker();
+		exit(0);
 	ft_ft_check_error_one_checker(arc, arv, &arra);
 	instraction = get_next_line(0);
 	while (instraction != '\0')

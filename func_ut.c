@@ -6,11 +6,10 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:51:11 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 09:48:25 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 19:38:47 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "push_swap.h"
 
 size_t	ft_strlen(const char *str)
@@ -47,6 +46,8 @@ int	ft_atoi(const char *str)
 	i = 0;
 	n = 0;
 	sign = 1;
+	if (str[0] == '\0')
+		ft_error();
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-')

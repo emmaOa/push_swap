@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 09:50:04 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 09:52:32 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 19:54:05 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_isdigit(int a)
 	return (0);
 }
 
-char	*sort_a1(t_stack *arra)
+char	*ft_sort_a1(t_stack *arra)
 {
 	if (arra->stack[0] > arra->stack[1]
 		&& arra->stack[0] < arra->stack[2])

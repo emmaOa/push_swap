@@ -6,11 +6,10 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:35:23 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 10:53:15 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 19:59:26 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "push_swap.h"
 
 int	ft_double(t_stack *lin, int nb, int ac)
@@ -55,9 +54,7 @@ void	ft_check_error_one(int arc, char **arv, t_stack *arra)
 		while (arv[i + 1][j])
 		{
 			if (ft_isdigit(arv[i + 1][j]) == 0 && arv[i + 1][j] != '-')
-			{
 				ft_error();
-			}
 			j++;
 		}
 		sign_nb = ft_sign(arv[i + 1]);
@@ -70,16 +67,19 @@ void	ft_check_error_one(int arc, char **arv, t_stack *arra)
 	}
 }
 
-t_stack	ft_check_error(int arc, char **arv, t_stack *arra)
+t_stack	ft_check_error(int arc, char **arv, t_stack *arra, t_stack *arrb)
 {
 	if (arc == 1)
-	{
-		ft_error();
-	}
+		exit(0);
 	ft_check_error_one(arc, arv, arra);
 	if (arc == 4)
 	{
-		sort_a1(arra);
+		ft_sort_a1(arra);
+		exit(0);
+	}
+	if (arc == 6)
+	{
+		ft_sort_a2(arra, arrb);
 		exit(0);
 	}
 	return (*arra);
@@ -98,7 +98,7 @@ int	main(int arc, char **arv)
 	arrb.len = 0;
 	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
 	len.len = arra.len;
-	arra = ft_check_error(arc, arv, &arra);
+	arra = ft_check_error(arc, arv, &arra, &arrb);
 	ft_sort_arra(&arra);
 	len = ft_found_lis(&arra);
 	count = ft_count_lis(&len);

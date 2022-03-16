@@ -6,11 +6,10 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:46:29 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 20:46:12 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:27:00 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "push_swap.h"
 
 void	ft_sb(t_stack *arrb)

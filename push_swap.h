@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:48:31 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 10:52:32 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 19:59:06 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void		ft_rrb(t_stack *arrb);
 void		ft_rrr(t_stack *arrb, t_stack *arra);
 void		ft_rr(t_stack *arrb, t_stack *arra);
 void		call(char *s, void (*f)(t_stack *arr), t_stack *t);
-void		sort_a2(t_stack *arra, t_stack *arrb);
-char		*sort_a1(t_stack *arra);
+char		*ft_sort_a1(t_stack *arra);
 t_stack		ft_found_lis(t_stack *arra);
 int			ft_count_lis(t_stack *len);
 t_stack		ft_indec(t_stack *len, t_stack *arra);
@@ -106,4 +105,5 @@ void		ft_push_a_df_one(t_stack *arrb, t_actions *mouves);
 t_stack		ft_indec_sub_sq_one(int indc_count, t_stack *sub_sq,
 				t_stack *indec, t_stack *len);
 void		ft_error(void);
+void		ft_sort_a2(t_stack *arra, t_stack *arrb);
 #endif
