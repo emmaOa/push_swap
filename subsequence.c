@@ -6,43 +6,11 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:56:30 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 22:39:29 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:34:31 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_stack	ft_found_lis(t_stack *arra)
-{
-	int		i;
-	int		j;
-	t_stack	len;
-
-	len.len = arra->len;
-	len.stack = malloc(arra->len * sizeof(int));
-	if (!len.stack)
-		exit (0);
-	i = 0;
-	while (i < arra->len)
-	{
-		len.stack[i] = 1;
-		i++;
-	}
-	i = 1;
-	while (i < arra->len)
-	{
-		j = 0;
-		while (j < i)
-		{
-			if (arra->stack[i] > arra->stack[j]
-				&& len.stack[i] <= len.stack[j] + 1)
-				len.stack[i] = len.stack[j] + 1;
-			j++;
-		}
-		i++;
-	}
-	return (len);
-}
 
 int	ft_count_lis(t_stack *len)
 {
@@ -86,10 +54,32 @@ t_stack	ft_indec(t_stack *len, t_stack *arra)
 	return (indec);
 }
 
+t_stack	ft_indec_sub_sq_one(int indc_count, t_stack *sub_sq,
+			t_stack *indec, t_stack *len)
+{
+	int	i;
+	int	j;
+
+	j = sub_sq->len - 2;
+	i = len->len;
+	while (i > 0)
+	{
+		if (i == indc_count)
+		{
+			if (j == (-1))
+				break ;
+			sub_sq->stack[j] = indec->stack[i];
+			indc_count = indec->stack[i];
+			j--;
+		}
+		i--;
+	}
+	return (*sub_sq);
+}
+
 t_stack	ft_indec_sub_sq(t_stack *indec, t_stack *len, int count)
 {
 	int		i;
-	int		j;
 	int		indc_count;
 	t_stack	sub_sq;
 
@@ -105,20 +95,7 @@ t_stack	ft_indec_sub_sq(t_stack *indec, t_stack *len, int count)
 		i++;
 	}
 	sub_sq.stack[count - 1] = indc_count;
-	j = count - 2;
-	i = len->len;
-	while (i > 0)
-	{
-		if (i == indc_count)
-		{
-			if (j == (-1))
-				break ;
-			sub_sq.stack[j] = indec->stack[i];
-			indc_count = indec->stack[i];
-			j--;
-		}
-		i--;
-	}
+	sub_sq = ft_indec_sub_sq_one(indc_count, &sub_sq, indec, len);
 	return (sub_sq);
 }
 

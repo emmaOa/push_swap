@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:46:22 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 22:47:45 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:21:13 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_min_mouves_a(t_actions *mouves)
 	}
 }
 
-void	ft_push_a_df(t_stack *arra, t_stack *arrb, t_actions *mouves)
+void	ft_push_a_df_one(t_stack *arrb, t_actions *mouves)
 {
 	int	repet;
 
@@ -54,6 +54,13 @@ void	ft_push_a_df(t_stack *arra, t_stack *arrb, t_actions *mouves)
 			repet--;
 		}
 	}
+}
+
+void	ft_push_a_df(t_stack *arra, t_stack *arrb, t_actions *mouves)
+{
+	int	repet;
+
+	ft_push_a_df_one(arrb, mouves);
 	if (mouves->mouves_a.stack[mouves->indec_nb] > 0)
 	{
 		repet = mouves->mouves_a.stack[mouves->indec_nb];

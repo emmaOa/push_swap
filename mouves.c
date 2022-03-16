@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:56:16 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 22:35:06 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:49:52 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,74 +32,56 @@ void	ft_mouves_normal(t_stack *arra, t_stack *arrb, t_actions *mouves, int j)
 	}
 }
 
-void	ft_mouves_mm(t_stack *arra, t_stack *arrb, t_actions *mouves, int j)
+t_ring	ft_max_min(t_stack *arra)
 {
-	int	i;
-	int	max;
-	int	indc_max;
-	int	min;
-	int	indc_min;	
+	int		i;
+	t_ring	ring;
 
 	i = 0;
-	max = INT32_MIN;
-	min = INT32_MAX;
+	ring.max = INT32_MIN;
+	ring.min = INT32_MAX;
 	while (i < arra->len)
 	{
-		if (arra->stack[i] > max)
+		if (arra->stack[i] > ring.max)
 		{
-			max = arra->stack[i];
-			indc_max = i;
+			ring.max = arra->stack[i];
+			ring.indc_max = i;
 		}
-		if (arra->stack[i] < min)
+		if (arra->stack[i] < ring.min)
 		{
-			min = arra->stack[i];
-			indc_min = i;
+			ring.min = arra->stack[i];
+			ring.indc_min = i;
 		}
 		i++;
 	}
-	if (arrb->stack[j] > max)
+	return (ring);
+}
+
+void	ft_mouves_mm(t_stack *arra, t_stack *arrb, t_actions *mouves, int j)
+{
+	t_ring	ring;
+
+	ring = ft_max_min(arra);
+	if (arrb->stack[j] > ring.max)
 	{
-		if (indc_max <= arra->len / 2)
-			mouves->mouves_a.stack[j] = indc_max + 1;
+		if (ring.indc_max <= arra->len / 2)
+			mouves->mouves_a.stack[j] = ring.indc_max + 1;
 		else
-			mouves->mouves_a.stack[j] = (arra->len - (indc_max + 1)) * (-1);
+			mouves->mouves_a.stack[j] = (arra->len
+					- (ring.indc_max + 1)) * (-1);
 	}
-	if (arrb->stack[j] < min)
+	if (arrb->stack[j] < ring.min)
 	{
-		if (indc_min <= arra->len / 2)
-			mouves->mouves_a.stack[j] = indc_min;
+		if (ring.indc_min <= arra->len / 2)
+			mouves->mouves_a.stack[j] = ring.indc_min;
 		else
-			mouves->mouves_a.stack[j] = (arra->len - indc_min) * (-1);
+			mouves->mouves_a.stack[j] = (arra->len - ring.indc_min) * (-1);
 	}
 }
 
-void	ft_mouves_arrb(t_stack *arrb, t_actions *mouves)
+int	ft_min_indec(t_stack *arra)
 {
 	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (j < (arrb->len / 2) + 1)
-	{
-		mouves->mouves_b.stack[j] = i;
-		j++;
-		i++;
-	}
-	j = mouves->mouves_b.len - 1;
-	i = -1;
-	while (j > arrb->len / 2)
-	{
-		mouves->mouves_b.stack[j] = i;
-		j--;
-		i--;
-	}
-}
-
-void	ft_sort_arra(t_stack *arra)
-{
-	int	i;
-	int	j;
 	int	min;
 	int	indec;
 
@@ -114,6 +96,15 @@ void	ft_sort_arra(t_stack *arra)
 		}	
 		i++;
 	}
+	return (indec);
+}
+
+void	ft_sort_arra(t_stack *arra)
+{
+	int	j;
+	int	indec;
+
+	indec = ft_min_indec(arra);
 	j = indec;
 	if (indec <= (arra->len / 2))
 	{

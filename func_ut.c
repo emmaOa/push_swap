@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:51:11 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 20:49:50 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 09:48:25 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,10 @@ int	ft_atoi(const char *str)
 		return (check(sign));
 	n = n * sign;
 	return ((int)n);
+}
+
+void	ft_error(void)
+{
+	write (2, "error\n", 6);
+	exit (0);
 }

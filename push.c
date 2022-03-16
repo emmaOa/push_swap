@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 19:06:40 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 22:39:08 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:56:44 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,29 @@ void	ft_push_not_lis(t_stack *lis, t_stack *arra, t_stack *arrb)
 		ft_pb(arra, arrb);
 	}
 	ft_sort_arra(arra);
+}
+
+void	ft_mouves_arrb(t_stack *arrb, t_actions *mouves)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (j < (arrb->len / 2) + 1)
+	{
+		mouves->mouves_b.stack[j] = i;
+		j++;
+		i++;
+	}
+	j = mouves->mouves_b.len - 1;
+	i = -1;
+	while (j > arrb->len / 2)
+	{
+		mouves->mouves_b.stack[j] = i;
+		j--;
+		i--;
+	}
 }
 
 t_actions	ft_mouves(t_stack *arra, t_stack *arrb)
@@ -59,6 +82,20 @@ t_actions	ft_mouves(t_stack *arra, t_stack *arrb)
 	return (mouves);
 }
 
+void	ft_puch_arra_one(t_stack *arra, t_stack *arrb, t_actions mouves)
+{
+	if ((mouves.mouves_b.stack[mouves.indec_nb] <= 0
+			&& mouves.mouves_a.stack[mouves.indec_nb] < 0)
+		|| (mouves.mouves_b.stack[mouves.indec_nb] < 0
+			&& mouves.mouves_a.stack[mouves.indec_nb] <= 0))
+		ft_arra_arrb_negative(arra, arrb, &mouves);
+	if ((mouves.mouves_b.stack[mouves.indec_nb] < 0
+			&& mouves.mouves_a.stack[mouves.indec_nb] > 0)
+		|| (mouves.mouves_b.stack[mouves.indec_nb] > 0
+			&& mouves.mouves_a.stack[mouves.indec_nb] < 0))
+		ft_push_a_df(arra, arrb, &mouves);
+}
+
 void	ft_push_arra(t_stack *arra, t_stack *arrb)
 {
 	t_actions	mouves;
@@ -67,6 +104,7 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 	{	
 		mouves = ft_mouves(arra, arrb);
 		ft_min_mouves_a(&mouves);
+		ft_puch_arra_one(arra, arrb, mouves);
 		if (mouves.mouves_b.stack[mouves.indec_nb] == 0
 			&& mouves.mouves_a.stack[mouves.indec_nb] == 0)
 			ft_pa(arra, arrb);
@@ -75,16 +113,6 @@ void	ft_push_arra(t_stack *arra, t_stack *arrb)
 			|| (mouves.mouves_b.stack[mouves.indec_nb] >= 0
 				&& mouves.mouves_a.stack[mouves.indec_nb] > 0))
 			ft_arra_arrb_positive(arra, arrb, &mouves);
-		if ((mouves.mouves_b.stack[mouves.indec_nb] <= 0
-				&& mouves.mouves_a.stack[mouves.indec_nb] < 0)
-			|| (mouves.mouves_b.stack[mouves.indec_nb] < 0
-				&& mouves.mouves_a.stack[mouves.indec_nb] <= 0))
-			ft_arra_arrb_negative(arra, arrb, &mouves);
-		if ((mouves.mouves_b.stack[mouves.indec_nb] < 0
-				&& mouves.mouves_a.stack[mouves.indec_nb] > 0)
-			|| (mouves.mouves_b.stack[mouves.indec_nb] > 0
-				&& mouves.mouves_a.stack[mouves.indec_nb] < 0))
-			ft_push_a_df(arra, arrb, &mouves);
 		free(mouves.mouves_a.stack);
 		free(mouves.mouves_b.stack);
 	}

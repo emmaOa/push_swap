@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:03:01 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 23:24:43 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 10:04:25 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ int	ft_strncmp(const char *d, const char *s, size_t n)
 	return (0);
 }
 
+void	ft_error_checker(void)
+{
+	write (2, "error\n", 6);
+	exit (0);
+}
+
 void	ft_instraction(char *out_get, t_stack_checker *arra,
 	t_stack_checker *arrb)
 {
@@ -96,8 +102,5 @@ void	ft_instraction(char *out_get, t_stack_checker *arra,
 	else if (ft_strncmp(out_get, "rrr\n", 4) == 0)
 		ft_rrr_ch(arra, arrb);
 	else
-	{
-		write (2, "error\n", 6);
-		exit (0);
-	}
+		ft_error_checker();
 }

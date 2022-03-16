@@ -6,52 +6,19 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:35:23 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/14 22:37:57 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/16 10:53:15 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "push_swap.h"
 
-char	*sort_a1(t_stack *arra)
-{
-	if (arra->stack[0] > arra->stack[1]
-		&& arra->stack[0] < arra->stack[2])
-		call("sa\n", ft_sa, arra);
-	else if (arra->stack[0] > arra->stack[1]
-		&& arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
-	{
-		call("sa\n", ft_sa, arra);
-		call("rra\n", ft_rra, arra);
-	}
-	else if (arra->stack[0] > arra->stack[1]
-		&& arra->stack[0] > arra->stack[2] && arra->stack[1] < arra->stack[2])
-		call("ra\n", ft_ra, arra);
-	else if (arra->stack[0] < arra->stack[1]
-		&& arra->stack[0] < arra->stack[2] && arra->stack[1] > arra->stack[2])
-	{
-		call("sa\n", ft_sa, arra);
-		call("ra\n", ft_ra, arra);
-	}
-	else if (arra->stack[0] < arra->stack[1]
-		&& arra->stack[0] > arra->stack[2] && arra->stack[1] > arra->stack[2])
-		call("rra\n", ft_rra, arra);
-	return ("error\n");
-}
-
-int	ft_isdigit(int a)
-{
-	if (a >= '0' && a <= '9')
-		return (1);
-	return (0);
-}
-
 int	ft_double(t_stack *lin, int nb, int ac)
 {
 	int	i;
 
 	i = 0;
-	while (i < ac + 1)
+	while (i < ac)
 	{
 		if (lin->stack[i] == nb)
 			return (1);
@@ -75,30 +42,13 @@ t_sign	ft_sign(char *str)
 	return (ret);
 }
 
-int	main(int arc, char **arv)
+void	ft_check_error_one(int arc, char **arv, t_stack *arra)
 {
 	int		i;
 	int		j;
-	int		count;
-	t_stack	len;
-	t_stack	lis;
-	t_stack	sub;
-	t_stack	arra;
-	t_stack	arrb;
-	t_stack	sub_sq;
 	t_sign	sign_nb;
 
 	i = 0;
-	arra.len = arc - 1;
-	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
-	arrb.len = 0;
-	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
-	len.len = arra.len;
-	if (arc == 1)
-	{
-		write (2, "error\n", 6);
-		exit (0);
-	}
 	while (i < arc - 1)
 	{
 		j = 0;
@@ -106,39 +56,58 @@ int	main(int arc, char **arv)
 		{
 			if (ft_isdigit(arv[i + 1][j]) == 0 && arv[i + 1][j] != '-')
 			{
-				write (2, "error\n", 6);
-				exit (0);
+				ft_error();
 			}
 			j++;
 		}
 		sign_nb = ft_sign(arv[i + 1]);
-		if (sign_nb.nb2 == 1)
+		if (sign_nb.nb2 == 1 || ft_double(arra, sign_nb.nb, i) == 1)
 		{
-			write (2, "error\n", 6);
-			exit (0);
+			ft_error();
 		}
-		if (ft_double(&arra, sign_nb.nb, i) == 1)
-		{
-			write (2, "error\n", 6);
-			exit (0);
-		}
-		arra.stack[i] = sign_nb.nb;
+		arra->stack[i] = sign_nb.nb;
 		i++;
 	}
+}
+
+t_stack	ft_check_error(int arc, char **arv, t_stack *arra)
+{
+	if (arc == 1)
+	{
+		ft_error();
+	}
+	ft_check_error_one(arc, arv, arra);
 	if (arc == 4)
 	{
-		sort_a1(&arra);
+		sort_a1(arra);
 		exit(0);
 	}
+	return (*arra);
+}
+
+int	main(int arc, char **arv)
+{
+	int			count;
+	t_stack		len;
+	t_variable	variable;
+	t_stack		arra;
+	t_stack		arrb;
+
+	arra.len = arc - 1;
+	arra.stack = (int *)malloc((arc - 1) * sizeof(int));
+	arrb.len = 0;
+	arrb.stack = (int *)malloc((arc - 1) * sizeof(int));
+	len.len = arra.len;
+	arra = ft_check_error(arc, arv, &arra);
 	ft_sort_arra(&arra);
 	len = ft_found_lis(&arra);
 	count = ft_count_lis(&len);
-	sub_sq.len = count;
-	lis.len = count;
-	lis = ft_indec(&len, &arra);
-	sub_sq = ft_indec_sub_sq(&lis, &len, count);
-	sub.len = count;
-	sub = ft_sub_sq(&arra, &sub_sq, count);
-	ft_push_not_lis(&sub, &arra, &arrb);
+	variable.sub_sq.len = count;
+	variable.lis.len = count;
+	variable.lis = ft_indec(&len, &arra);
+	variable.sub_sq = ft_indec_sub_sq(&variable.lis, &len, count);
+	variable.sub.len = count;
+	variable.sub = ft_sub_sq(&arra, &variable.sub_sq, count);
+	ft_push_not_lis(&variable.sub, &arra, &arrb);
 	ft_push_arra(&arra, &arrb);
 }
