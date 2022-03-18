@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:03:01 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 10:04:25 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:32:21 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_strncmp(const char *d, const char *s, size_t n)
 
 void	ft_error_checker(void)
 {
-	write (2, "error\n", 6);
+	write (2, "Error\n", 6);
 	exit (0);
 }
 

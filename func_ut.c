@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:51:11 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 19:38:47 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:31:48 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	ft_atoi(const char *str)
 	i = 0;
 	n = 0;
 	sign = 1;
-	if (str[0] == '\0')
-		ft_error();
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-')
@@ -69,6 +67,6 @@ int	ft_atoi(const char *str)
 
 void	ft_error(void)
 {
-	write (2, "error\n", 6);
+	write (2, "Error\n", 6);
 	exit (0);
 }

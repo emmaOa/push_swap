@@ -6,11 +6,12 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:35:23 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/16 19:59:26 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/18 17:04:08 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 int	ft_double(t_stack *lin, int nb, int ac)
 {
@@ -34,6 +35,8 @@ t_sign	ft_sign(char *str)
 
 	i = 0;
 	sign = str[i];
+	if (str[0] == '\0')
+		ft_error();
 	ret.nb = ft_atoi(str);
 	ret.nb2 = 0;
 	if ((ret.nb < 0 && sign != '-') || (ret.nb > 0 && sign == '-'))
@@ -51,9 +54,12 @@ void	ft_check_error_one(int arc, char **arv, t_stack *arra)
 	while (i < arc - 1)
 	{
 		j = 0;
+		if (ft_isdigit(arv[i + 1][j]) == 0
+			&& arv[i + 1][j] != '-' && arv[i + 1][j] != '+')
+				ft_error();
 		while (arv[i + 1][j])
 		{
-			if (ft_isdigit(arv[i + 1][j]) == 0 && arv[i + 1][j] != '-')
+			if (ft_isdigit(arv[i + 1][j]) == 0 && j != 0)
 				ft_error();
 			j++;
 		}
