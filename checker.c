@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:42:38 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/18 17:11:24 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/18 18:16:36 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	ft_checker(t_stack_checker *arra)
 void	ft_ft_check_error_one_checker(int arc, char **arv,
 		t_stack_checker *arra)
 {
-	int		i;
-	int		j;
+	int				i;
+	int				j;
 	t_sign_checker	sign_nb;
 
 	i = 0;
@@ -39,7 +39,7 @@ void	ft_ft_check_error_one_checker(int arc, char **arv,
 		j = 0;
 		if (ft_isdigit_chacker(arv[i + 1][j]) == 0
 			&& arv[i + 1][j] != '-' && arv[i + 1][j] != '+')
-				ft_error_checker();
+			ft_error_checker();
 		while (arv[i + 1][j])
 		{
 			if (ft_isdigit_chacker(arv[i + 1][j]) == 0 && j != 0)

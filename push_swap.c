@@ -6,7 +6,7 @@
 /*   By: iouazzan <iouazzan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:35:23 by iouazzan          #+#    #+#             */
-/*   Updated: 2022/03/18 17:04:08 by iouazzan         ###   ########.fr       */
+/*   Updated: 2022/03/18 18:16:46 by iouazzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_check_error_one(int arc, char **arv, t_stack *arra)
 		j = 0;
 		if (ft_isdigit(arv[i + 1][j]) == 0
 			&& arv[i + 1][j] != '-' && arv[i + 1][j] != '+')
-				ft_error();
+			ft_error();
 		while (arv[i + 1][j])
 		{
 			if (ft_isdigit(arv[i + 1][j]) == 0 && j != 0)
